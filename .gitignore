@@ -1,5 +1,7 @@
 /_build/
 /.mooncakes/
 /.moonagent/
+/tools/schema-reference/node_modules/
 /docs/evidence/*/upstream/spec--*
+/docs/evidence/*/upstream/gbfs-v2.3-spec.md
 /docs/evidence/*/upstream/schema--*

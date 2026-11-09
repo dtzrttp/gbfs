@@ -3,6 +3,7 @@
 pub(all) enum Severity {
   Error
   Warning
+  Info
 } derive(Eq, Debug)
 
 ///|
@@ -19,6 +20,10 @@ pub(all) struct Diagnostic {
   severity : Severity
   code : String
   message : String
+  actual : String?
+  expected : String?
+  suggestion : String?
+  source : String?
   schema_pointer : String?
 } derive(Debug)
 
@@ -30,9 +35,26 @@ pub fn Diagnostic::to_json(self : Diagnostic) -> Json {
   let severity : String = match self.severity {
     Error => "error"
     Warning => "warning"
+    Info => "info"
   }
   let schema_pointer : Json = match self.schema_pointer {
     Some(path) => Json::string(path)
+    None => Json::null()
+  }
+  let actual : Json = match self.actual {
+    Some(value) => Json::string(value)
+    None => Json::null()
+  }
+  let expected : Json = match self.expected {
+    Some(value) => Json::string(value)
+    None => Json::null()
+  }
+  let suggestion : Json = match self.suggestion {
+    Some(value) => Json::string(value)
+    None => Json::null()
+  }
+  let source : Json = match self.source {
+    Some(value) => Json::string(value)
     None => Json::null()
   }
   {
@@ -41,6 +63,10 @@ pub fn Diagnostic::to_json(self : Diagnostic) -> Json {
     "severity": severity,
     "code": self.code,
     "message": self.message,
+    "actual": actual,
+    "expected": expected,
+    "suggestion": suggestion,
+    "source": source,
     "schema_pointer": schema_pointer,
   }
 }
@@ -57,7 +83,22 @@ fn issue(
   code : String,
   message : String,
   severity~ : Severity = Error,
+  actual? : String,
+  expected? : String,
+  suggestion? : String,
+  source? : String,
   schema_pointer? : String,
 ) -> Diagnostic {
-  { file: feed + ".json", pointer, severity, code, message, schema_pointer, }
+  {
+    file: feed + ".json",
+    pointer,
+    severity,
+    code,
+    message,
+    actual,
+    expected,
+    suggestion,
+    source,
+    schema_pointer,
+  }
 }

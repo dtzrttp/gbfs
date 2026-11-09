@@ -1,26 +1,23 @@
 ///|
-/// 首版支持的文件名，不含 .json 后缀。
-pub fn supported_feeds() -> Array[String] {
-  [
-    "gbfs", "system_information", "station_information", "station_status", "vehicle_types",
-    "vehicle_status",
-  ]
-}
-
-///|
 fn compile_schema(source : String) -> @schema.Schema {
-  // 只编译仓库固定的上游 Schema。测试覆盖全部六份。
   try! @schema.Schema::new(@json.parse(source[:]), format=true)
 }
 
 ///|
 let schemas : Map[String, @schema.Schema] = {
   "gbfs": compile_schema(schema_gbfs),
+  "gbfs_versions": compile_schema(schema_gbfs_versions),
   "system_information": compile_schema(schema_system_information),
   "station_information": compile_schema(schema_station_information),
   "station_status": compile_schema(schema_station_status),
+  "free_bike_status": compile_schema(schema_free_bike_status),
   "vehicle_types": compile_schema(schema_vehicle_types),
-  "vehicle_status": compile_schema(schema_vehicle_status),
+  "system_hours": compile_schema(schema_system_hours),
+  "system_alerts": compile_schema(schema_system_alerts),
+  "system_calendar": compile_schema(schema_system_calendar),
+  "system_regions": compile_schema(schema_system_regions),
+  "system_pricing_plans": compile_schema(schema_system_pricing_plans),
+  "geofencing_zones": compile_schema(schema_geofencing_zones),
 }
 
 ///|
@@ -36,17 +33,112 @@ fn schema_message(keyword : String) -> String {
     "maximum" | "exclusiveMaximum" => "字段值高于允许范围"
     "minItems" => "数组元素不足"
     "maxItems" => "数组元素过多"
+    "minProperties" => "对象属性不足"
+    "maxProperties" => "对象属性过多"
     "additionalProperties" => "对象含有未允许的字段"
     "contains" => "数组缺少符合条件的元素"
     "oneOf" => "必须恰好满足一种结构"
     "anyOf" => "至少需要满足一种结构"
     "not" => "字段符合 Schema 禁止的结构"
-    _ => "字段不满足 GBFS 3.0 Schema 的 \{keyword} 规则"
+    _ => "字段不满足 GBFS v2.3 Schema 的 \{keyword} 规则"
   }
 }
 
 ///|
-fn schema_issue(feed : String, fault : @schema.Fault) -> Diagnostic {
+fn pointer_segment(segment : String) -> String {
+  segment.replace_all(old="~1", new="/").replace_all(old="~0", new="~")
+}
+
+///|
+fn pointer_segments(pointer : String) -> Array[String] {
+  let segments = []
+  if pointer.is_empty() {
+    return segments
+  }
+  let mut segment = ""
+  let mut first = true
+  for character in pointer {
+    if character == '/' {
+      if first {
+        first = false
+      } else {
+        segments.push(pointer_segment(segment))
+        segment = ""
+      }
+    } else {
+      first = false
+      segment += character.to_string()
+    }
+  }
+  segments.push(pointer_segment(segment))
+  segments
+}
+
+///|
+fn value_at_pointer(value : Json, pointer : String) -> Json? {
+  let mut current : Json? = Some(value)
+  for segment in pointer_segments(pointer) {
+    current = match current {
+      Some(Object(fields)) => fields.get(segment)
+      Some(Array(items)) => {
+        let mut found : Json? = None
+        for i, item in items {
+          if i.to_string() == segment {
+            found = Some(item)
+            break
+          }
+        }
+        found
+      }
+      _ => None
+    }
+  }
+  current
+}
+
+///|
+fn actual_value(value : Json, pointer : String) -> String? {
+  match value_at_pointer(value, pointer) {
+    Some(String(text)) => Some(text)
+    Some(actual) => Some(actual.stringify())
+    None => None
+  }
+}
+
+///|
+fn schema_expected(
+  pointer : String,
+  keyword : String,
+  message : String,
+) -> String {
+  if pointer == "/version" && keyword == "const" {
+    "2.3"
+  } else if keyword == "required" {
+    "字段必须存在"
+  } else {
+    "满足 Schema 的 \{keyword} 约束（\{message}）"
+  }
+}
+
+///|
+fn schema_suggestion(pointer : String, keyword : String) -> String {
+  if pointer == "/version" && keyword == "const" {
+    "将 version 设置为 2.3；本工具不会自动切换 GBFS 版本"
+  } else if keyword == "required" {
+    "按 JSON Pointer 补充缺少的字段"
+  } else if keyword == "type" {
+    "将该值改为 GBFS v2.3 Schema 指定的 JSON 类型"
+  } else {
+    "按官方 v2.3 Schema 修正该字段"
+  }
+}
+
+///|
+fn schema_issue(
+  feed : String,
+  value : Json,
+  fault : @schema.Fault,
+) -> Diagnostic {
   let mut pointer = fault.at
   let mut message = schema_message(fault.keyword)
   if fault.keyword == "required" && fault.message.has_prefix("missing ") {
@@ -57,108 +149,50 @@ fn schema_issue(feed : String, fault : @schema.Fault) -> Diagnostic {
     pointer += "/" + escaped
     message = "缺少必填字段 \{field}"
   }
-  if feed == "gbfs" && pointer == "/data/feeds" {
-    match fault.schema_at {
-      "/properties/data/properties/feeds/contains" =>
-        message = "发现列表必须包含 system_information"
-      "/properties/data/properties/feeds/allOf/0/anyOf" =>
-        message = "发现列表必须至少包含 station_status 或 vehicle_status"
-      "/properties/data/properties/feeds/allOf/1/then/contains" =>
-        message = "列出 station_information 时必须同时列出 station_status"
-      _ => ()
-    }
-  }
-  issue(
-    feed,
+  {
+    file: feed + ".json",
     pointer,
-    "schema." + fault.keyword,
+    severity: Error,
+    code: "schema." + fault.keyword,
     message,
-    schema_pointer=fault.schema_at,
-  )
-}
-
-///|
-fn is_feed_url(text : String) -> Bool {
-  let url = @url.Url::decode(text[:], syntax=Rfc3986) catch {
-    _ => return false
-  }
-  if url.scheme is Some(scheme) && url.host is Some(host) {
-    let protocol = scheme.to_lower()
-    (protocol == "http" || protocol == "https") && !host.is_empty()
-  } else {
-    false
+    actual: actual_value(value, pointer),
+    expected: Some(schema_expected(pointer, fault.keyword, fault.message)),
+    suggestion: Some(schema_suggestion(pointer, fault.keyword)),
+    source: Some(
+      "https://github.com/MobilityData/gbfs-json-schema/blob/01d4cb480410ca234b1d76799daf474b8f839e85/v2.3/" +
+      feed +
+      ".json",
+    ),
+    schema_pointer: Some(fault.schema_at),
   }
 }
 
 ///|
-fn check_feed_urls(value : Json, issues : Array[Diagnostic]) -> Unit {
-  if value is { "data": { "feeds": Array(feeds), .. }, .. } {
-    for i, feed in feeds {
-      if feed is { "url": String(url), .. } && !is_feed_url(url) {
-        issues.push(
-          issue(
-            "gbfs",
-            "/data/feeds/\{i}/url",
-            "feed.url",
-            "端点必须是包含主机的 HTTP 或 HTTPS URL",
-          ),
-        )
-      }
-    }
-  }
-}
-
-///|
-fn parse_feed(
-  feed : String,
-  source : String,
-  issues : Array[Diagnostic],
-) -> Json? {
-  guard schemas.get(feed) is Some(schema) else {
-    issues.push(issue(feed, "", "feed.unsupported", "首版未支持此端点"))
-    return None
-  }
-  if source.length() > 8 * 1024 * 1024 {
-    issues.push(
-      issue(
-        feed, "", "json.too_large", "JSON 文本超过 8 Mi 个编码单元",
-      ),
-    )
-    return None
-  }
-  let value = @json.parse(
-    source[:],
-    max_nesting_depth=64,
-    reject_duplicate_keys=true,
-  ) catch {
-    _ => {
-      issues.push(
-        issue(
-          feed, "", "json.invalid", "JSON 语法无效、含有重复键或嵌套超过 64 层",
-        ),
-      )
-      return None
-    }
-  }
-  let faults = schema.faults(value)
-  for fault in faults {
-    issues.push(schema_issue(feed, fault))
-  }
-  if feed == "gbfs" {
-    check_feed_urls(value, issues)
-  }
-  // URL 关系诊断独立于发现列表的结构可读性。
-  if faults.is_empty() {
-    Some(value)
-  } else {
-    None
-  }
-}
-
-///|
-/// 验证单个端点的 JSON 及官方 Schema。
+/// 校验一份 GBFS v2.3 端点 JSON；feed 是不含扩展名的固定端点名。
 pub fn validate_file(feed : String, source : String) -> Array[Diagnostic] {
-  let issues = []
-  parse_feed(feed, source, issues) |> ignore
-  issues
+  if !is_supported_feed(feed) {
+    return [
+      issue(
+        feed,
+        "",
+        "feed.unsupported",
+        "首版只支持 GBFS v2.3 的 13 个官方端点",
+        actual=feed,
+        expected="v2.3 官方端点名",
+        suggestion="更换为受支持的端点名，或升级项目版本后再验证",
+        source="docs/decisions.md 的首版支持范围",
+      ),
+    ]
+  }
+  let schema = schemas[feed]
+  match parse_json_untrusted(feed + ".json", source) {
+    Err(diagnostic) => [diagnostic]
+    Ok(document) => {
+      let value = untrusted_value(document)
+      limit_diagnostics(
+        schema.faults(value).map(fault => schema_issue(feed, value, fault)),
+        1000,
+      )
+    }
+  }
 }

@@ -1,0 +1,69 @@
+GBFS v2.3 阶段验证记录
+执行日期：2026-11-09（Asia/Shanghai）
+目标后端：JavaScript / Node.js 24
+
+> moon fmt
+Finished. moon: ran 16 tasks, now up to date
+exit_code=0
+
+> moon fmt --check
+Finished. moon: ran 16 tasks, now up to date
+exit_code=0
+
+> moon check --target js --deny-warn
+Finished. moon: ran 7 tasks, now up to date
+exit_code=0
+
+> moon test --target js --deny-warn
+仅完成 JSON 语法解析；未运行 GBFS Schema 或跨文件校验。0 个错误，0 个警告，0 条信息。
+仅完成 JSON 语法解析；未运行 GBFS Schema 或跨文件校验。0 个错误，0 个警告，0 条信息。
+{
+  "tool": "gbfs.mbt",
+  "result": "syntax_only",
+  "schema_validation": "not_run",
+  "errors": 1,
+  "warnings": 0,
+  "infos": 0,
+  "diagnostics": [
+    {
+      "file": "tests/fixtures/parser/invalid.json",
+      "pointer": "",
+      "severity": "error",
+      "code": "json.invalid",
+      "message": "JSON 语法无效、含有重复对象键或嵌套超过 64 层",
+      "actual": null,
+      "expected": "无重复键且嵌套不超过 64 层的合法 JSON",
+      "suggestion": "修复 JSON 语法、移除重复键，并降低嵌套深度",
+      "source": "本工具的离线 JSON 输入安全边界",
+      "schema_pointer": null
+    }
+  ]
+}
+GBFS v2.3 Schema 校验完成（跨文件关系规则仍在开发中）：0 个错误，0 个警告，0 条信息。
+GBFS v2.3 Schema 校验完成（跨文件关系规则仍在开发中）：0 个错误，0 个警告，0 条信息。
+Total tests: 23, passed: 23, failed: 0.
+exit_code=0
+
+> moon build --target js --deny-warn
+Finished. moon: ran 18 tasks, now up to date
+Artifacts:
+  dtzrttp/gbfs/cmd/main  js  <项目目录>\_build\js\debug\build\cmd\main\main.js
+exit_code=0
+
+> node tools/embed-schemas.cjs --check
+（无输出）
+exit_code=0
+
+> node tools/verify-cli.cjs
+CLI 集成验证通过：目录、显式文件、JSON 报告、解析错误、版本拒绝、未知端点、UTF-8 与退出码。
+exit_code=0
+
+> moon run cmd/main --target js -- check tests/fixtures/v2.3/snapshot --json
+{
+  "version": "2.3",
+  "errors": 0,
+  "warnings": 0,
+  "infos": 0,
+  "diagnostics": []
+}
+exit_code=0

@@ -31,50 +31,86 @@ fn read_document(path : String) -> String raise CliError {
 }
 
 ///|
-fn load_snapshot(dir : String) -> Map[String, String] raise CliError {
-  let entries = @fs.read_dir(dir) catch {
-    _ => raise InputError("无法读取目录 \"\{dir}\"")
+fn is_regular_file(path : String) -> Bool {
+  @fs.is_file(path) catch {
+    _ => false
   }
-  let feeds = Map([])
-  for name in @gbfs.supported_feeds() {
-    let file = name + ".json"
-    if entries.any(entry => entry == file) {
-      feeds[name] = read_document(dir + "/" + file)
-    }
-  }
-  feeds
 }
 
 ///|
-fn print_report(issues : Array[@gbfs.Diagnostic], as_json : Bool) -> Int32 {
-  let errors = issues.filter(issue => issue.severity is Error).length()
-  let warnings = issues.length() - errors
+fn collect_paths(inputs : Array[String]) -> Array[String] raise CliError {
+  let paths = []
+  for input in inputs {
+    let is_directory = @fs.is_dir(input) catch { _ => false }
+    if is_directory {
+      let entries = @fs.read_dir(input) catch {
+        _ => raise InputError("无法读取目录 \"\{input}\"")
+      }
+      for name in entries {
+        if name.length() >= 5 && name[name.length() - 5:] == ".json" {
+          let path = input + "/" + name
+          if is_regular_file(path) {
+            paths.push(path)
+          }
+        }
+      }
+    } else {
+      if !is_regular_file(input) {
+        raise InputError("不是普通文件或目录 \"\{input}\"")
+      }
+      paths.push(input)
+    }
+  }
+  if paths.is_empty() {
+    raise InputError("输入中没有 JSON 文件")
+  }
+  if paths.length() > @gbfs.max_input_files() {
+    raise InputError(
+      "单次最多读取 " +
+      @gbfs.max_input_files().to_string() +
+      " 个 JSON 文件",
+    )
+  }
+  paths
+}
+
+///|
+fn print_parse_report(
+  diagnostics : Array[@gbfs.Diagnostic],
+  as_json : Bool,
+) -> Int32 {
+  let errors = diagnostics.filter(d => d.severity is Error).length()
+  let warnings = diagnostics.filter(d => d.severity is Warning).length()
+  let infos = diagnostics.filter(d => d.severity is Info).length()
   if as_json {
     let output : Json = {
-      "version": "3.0",
+      "tool": "gbfs.mbt",
+      "result": "syntax_only",
+      "schema_validation": "not_run",
       "errors": errors,
       "warnings": warnings,
-      "diagnostics": Json::array(issues.map(issue => issue.to_json())),
+      "infos": infos,
+      "diagnostics": Json::array(diagnostics.map(d => d.to_json())),
     }
     println(output.stringify(indent=2))
   } else {
-    for issue in issues {
-      let level = if issue.severity is Error { "错误" } else { "警告" }
-      let at = if issue.pointer.is_empty() {
+    for diagnostic in diagnostics {
+      let level = match diagnostic.severity {
+        Error => "错误"
+        Warning => "警告"
+        Info => "信息"
+      }
+      let at = if diagnostic.pointer.is_empty() {
         "（根）"
       } else {
-        issue.pointer
-      }
-      let detail = match issue.schema_pointer {
-        Some(path) => "（Schema " + path + "）"
-        None => ""
+        diagnostic.pointer
       }
       println(
-        "[\{level}] \{issue.file}\{at} \{issue.code} \{issue.message}\{detail}",
+        "[\{level}] \{diagnostic.file}\{at} \{diagnostic.code} \{diagnostic.message}",
       )
     }
     println(
-      "GBFS 3.0 校验完成，\{errors} 个错误，\{warnings} 个警告。",
+      "仅完成 JSON 语法解析；未运行 GBFS Schema 或跨文件校验。\{errors} 个错误，\{warnings} 个警告，\{infos} 条信息。",
     )
   }
   if errors == 0 {
@@ -85,39 +121,190 @@ fn print_report(issues : Array[@gbfs.Diagnostic], as_json : Bool) -> Int32 {
 }
 
 ///|
-let usage : String =
-  #|用法
-  #|  check <目录> [--json]           校验一个本地 GBFS 3.0 快照
-  #|  file <端点名> <文件> [--json]   校验单份文件（端点名不含 .json）
-  #|  --help                          显示用法
-
-///|
-fn check_file(
-  name : String,
-  path : String,
-  as_json : Bool,
-) -> Int32 raise CliError {
-  guard @gbfs.supported_feeds().contains(name) else {
-    raise InputError("未支持的端点 " + Json(name).stringify())
+fn parse_inputs(inputs : Array[String], as_json : Bool) -> Int32 raise CliError {
+  let paths = collect_paths(inputs)
+  let diagnostics = []
+  let mut total_bytes = 0
+  for path in paths {
+    let source = read_document(path)
+    total_bytes += @utf8.encode(source).length()
+    if total_bytes > @gbfs.max_snapshot_bytes() {
+      raise InputError("所有输入文件的 UTF-8 总字节数超过 64 MiB")
+    }
+    match @gbfs.parse_json_untrusted(path, source) {
+      Ok(_) => ()
+      Err(diagnostic) => diagnostics.push(diagnostic)
+    }
   }
-  let issues = @gbfs.validate_file(name, read_document(path))
-  print_report(issues.map(issue => { ..issue, file: path, }), as_json)
+  print_parse_report(@gbfs.sort_diagnostics(diagnostics), as_json)
 }
 
 ///|
-fn run(args : ArrayView[String]) -> Int32 raise CliError {
-  match args {
-    ["--help"] | ["-h"] => {
-      println(usage)
-      0
+fn endpoint_from_path(path : String) -> String raise CliError {
+  let normalized = path.replace_all(old="\\", new="/")
+  let mut basename = ""
+  for character in normalized {
+    if character == '/' {
+      basename = ""
+    } else {
+      basename += character.to_string()
     }
-    ["check", dir] =>
-      print_report(@gbfs.validate_snapshot(load_snapshot(dir)), false)
-    ["check", dir, "--json"] =>
-      print_report(@gbfs.validate_snapshot(load_snapshot(dir)), true)
-    ["file", name, path] => check_file(name, path, false)
-    ["file", name, path, "--json"] => check_file(name, path, true)
-    _ => raise InputError("命令行参数有误\n" + usage)
+  }
+  guard basename.length() >= 5 && basename[basename.length() - 5:] == ".json" else {
+    raise InputError("端点文件名必须以 .json 结尾：\"" + path + "\"")
+  }
+  basename[:basename.length() - 5].to_owned()
+}
+
+///|
+fn validation_report(
+  diagnostics : Array[@gbfs.Diagnostic],
+  as_json : Bool,
+) -> Int32 {
+  let errors = diagnostics.filter(d => d.severity is Error).length()
+  let warnings = diagnostics.filter(d => d.severity is Warning).length()
+  let infos = diagnostics.filter(d => d.severity is Info).length()
+  if as_json {
+    let output : Json = {
+      "version": @gbfs.gbfs_version(),
+      "errors": errors,
+      "warnings": warnings,
+      "infos": infos,
+      "diagnostics": Json::array(diagnostics.map(d => d.to_json())),
+    }
+    println(output.stringify(indent=2))
+  } else {
+    for diagnostic in diagnostics {
+      let level = match diagnostic.severity {
+        Error => "错误"
+        Warning => "警告"
+        Info => "信息"
+      }
+      let at = if diagnostic.pointer.is_empty() {
+        "（根）"
+      } else {
+        diagnostic.pointer
+      }
+      println(
+        "[" +
+        level +
+        "] " +
+        diagnostic.file +
+        at +
+        " " +
+        diagnostic.code +
+        " " +
+        diagnostic.message,
+      )
+      if diagnostic.actual is Some(_) || diagnostic.expected is Some(_) {
+        println(
+          "  实际值=" +
+          diagnostic.actual.unwrap_or("（无）") +
+          "；期望=" +
+          diagnostic.expected.unwrap_or("（未提供）"),
+        )
+      }
+      if diagnostic.suggestion is Some(suggestion) {
+        println("  建议=" + suggestion)
+      }
+      if diagnostic.source is Some(source) {
+        println("  来源=" + source)
+      }
+    }
+    println(
+      "GBFS v2.3 Schema 校验完成（跨文件关系规则仍在开发中）：" +
+      errors.to_string() +
+      " 个错误，" +
+      warnings.to_string() +
+      " 个警告，" +
+      infos.to_string() +
+      " 条信息。",
+    )
+  }
+  if errors == 0 {
+    0
+  } else {
+    1
+  }
+}
+
+///|
+fn check_inputs(inputs : Array[String], as_json : Bool) -> Int32 raise CliError {
+  let paths = collect_paths(inputs)
+  let feeds = Map([])
+  let path_by_feed = Map([])
+  let mut total_bytes = 0
+  for path in paths {
+    let feed = endpoint_from_path(path)
+    if feeds.contains(feed) {
+      raise InputError("同一快照含有重复端点文件 " + feed + ".json")
+    }
+    let source = read_document(path)
+    total_bytes += @utf8.encode(source).length()
+    if total_bytes > @gbfs.max_snapshot_bytes() {
+      raise InputError("所有输入文件的 UTF-8 总字节数超过 64 MiB")
+    }
+    feeds[feed] = source
+    path_by_feed[feed] = path
+  }
+  let diagnostics = @gbfs.validate_snapshot(feeds)
+  let with_paths = diagnostics.map(diagnostic => {
+    let endpoint = if diagnostic.file.has_suffix(".json") {
+      diagnostic.file[:diagnostic.file.length() - 5].to_owned()
+    } else {
+      diagnostic.file
+    }
+    match path_by_feed.get(endpoint) {
+      Some(path) => { ..diagnostic, file: path, }
+      None => diagnostic
+    }
+  })
+  validation_report(@gbfs.sort_diagnostics(with_paths), as_json)
+}
+
+///|
+let usage : String =
+  #|用法
+  #|  check <目录或 JSON 文件...> [--json] 校验 GBFS v2.3 的本地快照
+  #|  parse <目录或 JSON 文件...> [--json] 仅解析 JSON，不执行 Schema 校验
+  #|  --help                                 显示用法
+
+///|
+fn run(args : ArrayView[String]) -> Int32 raise CliError {
+  if args.length() >= 2 && args[0] == "parse" {
+    let as_json = args[args.length() - 1] == "--json"
+    let end = if as_json { args.length() - 1 } else { args.length() }
+    if end <= 1 {
+      raise InputError(
+        "parse 需要至少一个目录或文件路径\n" + usage,
+      )
+    }
+    let inputs = []
+    for i in 1..<end {
+      inputs.push(args[i])
+    }
+    parse_inputs(inputs, as_json)
+  } else if args.length() >= 2 && args[0] == "check" {
+    let as_json = args[args.length() - 1] == "--json"
+    let end = if as_json { args.length() - 1 } else { args.length() }
+    if end <= 1 {
+      raise InputError(
+        "check 需要至少一个目录或 JSON 文件路径\n" + usage,
+      )
+    }
+    let inputs = []
+    for i in 1..<end {
+      inputs.push(args[i])
+    }
+    check_inputs(inputs, as_json)
+  } else {
+    match args {
+      ["--help"] | ["-h"] => {
+        println(usage)
+        0
+      }
+      _ => raise InputError("命令行参数有误\n" + usage)
+    }
   }
 }
 

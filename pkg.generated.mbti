@@ -6,9 +6,25 @@ import {
 }
 
 // Values
+pub fn gbfs_version() -> String
+
 pub fn has_errors(Array[Diagnostic]) -> Bool
 
+pub fn is_supported_feed(String) -> Bool
+
+pub fn max_input_files() -> Int32
+
+pub fn max_snapshot_bytes() -> Int32
+
+pub fn parse_json_untrusted(String, String) -> Result[UntrustedDocument, Diagnostic]
+
+pub fn sort_diagnostics(Array[Diagnostic]) -> Array[Diagnostic]
+
 pub fn supported_feeds() -> Array[String]
+
+pub fn untrusted_file(UntrustedDocument) -> String
+
+pub fn untrusted_value(UntrustedDocument) -> Json
 
 pub fn validate_file(String, String) -> Array[Diagnostic]
 
@@ -23,6 +39,10 @@ pub(all) struct Diagnostic {
   severity : Severity
   code : String
   message : String
+  actual : String?
+  expected : String?
+  suggestion : String?
+  source : String?
   schema_pointer : String?
 } derive(@debug.Debug)
 pub fn Diagnostic::to_json(Self) -> Json
@@ -31,10 +51,15 @@ pub fn Diagnostic::to_repr(Self) -> @debug.Repr
 pub(all) enum Severity {
   Error
   Warning
+  Info
 } derive(Eq, @debug.Debug)
 pub fn Severity::equal(Self, Self) -> Bool
 pub fn Severity::not_equal(Self, Self) -> Bool
 pub fn Severity::to_repr(Self) -> @debug.Repr
+
+pub struct UntrustedDocument {
+  // private fields
+}
 
 // Type aliases
 

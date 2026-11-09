@@ -12,9 +12,19 @@
 - 检查 PDDL 歧义命中 README、search.mbt、search_wbtest.mbt；确认其实现贪心最佳优先规划，不是 GBFS feed 工具。
 - 比较 v2.3 和最新正式 v3.1，选择 v2.3；取得 13 份原始 v2.3 Schema、blob SHA、字段摘要及官方系统目录版本统计。
 - 实际读取 v2.3、Schema、validator 的许可证线索；不分发许可证不明的 feed 夹具。
-- 写入 docs/dedup.md、docs/decisions.md、docs/spec-map.md、docs/plan.md。阶段 1 文档待审查后提交。
+- 写入 docs/dedup.md、docs/decisions.md、docs/spec-map.md、docs/plan.md。阶段 1 已由 `31f8b32` 提交。
+
+### 阶段 2 与单文件 Schema 开发
+
+- 新增固定 v2.3 端点清单、`UntrustedDocument`、UTF-8 字节数/64 层嵌套/重复键边界、error/warning/info 诊断字段与稳定排序。
+- CLI 支持目录和显式文件列表；`parse` 命令明确只解析 JSON，`check` 对固定 v2.3 Schema 做离线校验。
+- 从官方固定提交复制 13 份 Schema 至 `schemas/v2.3/`，逐文件 Git blob SHA 对比为 13/13；嵌入源由 `node tools/embed-schemas.cjs --check` 复核。
+- 新增合成最小结构测试覆盖 13 个 Schema，另测 v2.3 时间戳/版本、坐标边界、车辆形式枚举和 v3.0 端点拒绝。
+- 2026-11-09 实际运行 `moon test --target js --deny-warn`：23/23 通过；`moon fmt --check`、`moon check --target js --deny-warn`、`moon build --target js --deny-warn`、Schema 嵌入检查、CLI 集成验证均退出码 0。目录模式 JSON 示例返回 0 错误。完整输出见 `docs/evidence/2026-11-09/phase2-validation.txt`。跨文件检查和官方工具差分尚未完成。
+- 在一次混合递归删除命令上，自动审核因目标同时包含代码/测试文件而拒绝；没有再次运行该命令，旧 v3.0 原型素材保留但从当前活动路径退出。
 
 ### 下一步
 
-- 做一次文档/来源/链接与 Git diff 检查并提交阶段 1。
-- 然后开始 v2.3 模型、解析器、资源限制、报告结构和文件列表 CLI；此后按阶段运行用户要求的验证。
+- 完成逐规则单文件正反例、Schema 与官方 validator 的差分及差异说明。
+- 查证 v2.3 规范/validator 对字段引用、ID 唯一性、容量和时间的强制/建议语义，按依据实现跨文件规则。
+- 把项目 README、规范映射、CLI verifier 与 CI 更新到当前 v2.3 行为；完成后分批提交。

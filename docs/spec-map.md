@@ -1,15 +1,19 @@
 # GBFS v2.3 规范映射
 
-本文件把所选版本的规范/Schema 约束映射到首版实现责任与测试。规范 tag v2.3 指向 commit SHA 4f0cc7024ff5ba71d3c3e861c3ff23a281ef71f8，gbfs.md blob SHA 为 9d5a63e45a241b2427a273523d3a1a908eeb0529；固定官方 JSON Schema 提交 SHA 为 01d4cb480410ca234b1d76799daf474b8f839e85。阶段 1 先建立映射和范围，表中代码/测试位置是首版目标，v2.3 迁移完成后将补上实际行号、用例 ID 与差异结论。
+本文件把所选版本的规范/Schema 约束映射到实现和测试。规范 tag v2.3 指向 commit SHA 4f0cc7024ff5ba71d3c3e861c3ff23a281ef71f8，gbfs.md blob SHA 为 9d5a63e45a241b2427a273523d3a1a908eeb0529；固定官方 JSON Schema 提交 SHA 为 01d4cb480410ca234b1d76799daf474b8f839e85。
+
+当前实际代码位置：`model.mbt`（版本与端点范围）、`parser.mbt`（未验证 JSON 与资源边界）、`schema_validation.mbt`（官方 Schema 适配）、`diagnostic.mbt` / `report.mbt`（诊断和排序）、`snapshot_v23.mbt`（快照输入和必需文件）、`cmd/main/main.mbt`（本地 CLI）。当前测试位于 `v2_3_model_wbtest.mbt`、`validator_wbtest.mbt` 和 `cmd/main/main_wbtest.mbt`。下文以 `tests/schema/...` 标出的目录为后续逐规则测试目标，目前尚未全部创建；当前运行的 13 个最小正例和已列明的负例均集中在 `v2_3_model_wbtest.mbt`。
+
+截至 2026-11-09，全部 13 份官方 v2.3 Schema 已在当前代码中启用。单文件 validator 已接受 13 份 Schema 的合成最小结构；逐项反例矩阵及官方 validator 差分仍未完成。`validate_snapshot` 目前没有跨文件引用或数量检查，不能把 Schema 通过解释为快照关系已通过。
 
 ## 所有文件共用的外层结构
 
 | 规则 | v2.3 来源 | 诊断与目标位置 | 测试目标 |
 | --- | --- | --- | --- |
-| JSON 顶层为对象；last_updated、ttl、version、data 必填 | 每个 v2.3 JSON Schema 的根 required 列表 | schema_validation.mbt；稳定码 GBFS-SCHEMA-REQUIRED / GBFS-SCHEMA-TYPE | tests/schema/common_wbtest.mbt：缺字段、错误类型正反例 |
+| JSON 顶层为对象；last_updated、ttl、version、data 必填 | 每个 v2.3 JSON Schema 的根 required 列表 | `schema_validation.mbt` 将 Schema 关键词映射为 `schema.required`、`schema.type` 等码 | 当前基础用例在 `v2_3_model_wbtest.mbt`；缺字段、每种错误类型成对测试待补 |
 | last_updated 是 Unix 秒整数，Schema 下限为 1450155600；ttl 是非负整数 | 每个 Schema 根属性 | Schema 错误；跨文件新鲜度只能作为单独 warning，不能替代规范错误 | common_wbtest：字符串时间、负 TTL、有效时间戳 |
 | version 必须等于字符串 2.3 | 每个 Schema 的 version.const | 错误；固定版本，不从输入自动切换规范 | common_wbtest：2.2、3.0 和未知版本拒绝 |
-| JSON 不可解析、重复键、超限输入必须给出定位诊断 | 项目输入安全边界，不宣称是 GBFS 规范字段 | parser.mbt：源文件、JSON Pointer（若可恢复）、稳定错误码 | tests/parser_wbtest.mbt：损坏 JSON、重复键、嵌套与字节上限 |
+| JSON 不可解析、重复键、超限输入必须给出定位诊断 | 项目输入安全边界，不宣称是 GBFS 规范字段 | `parser.mbt`：源文件、根 JSON Pointer、稳定错误码 `json.invalid` / `json.too_large` | `v2_3_model_wbtest.mbt`：重复键、UTF-8 字节数与嵌套限制 |
 
 ## 官方 v2.3 文件和字段映射
 
@@ -55,4 +59,4 @@
 | PASERK/JWT/支付/租车/调度/地图/持续运行爬虫/数据库 | 不实现。 |
 | 运营方私有约定或自创字段规则 | 除非有规范来源并写入映射，否则忽略或按额外属性策略报告，不能冒称官方要求。 |
 
-阶段 2 将把表中目标文件/测试路径调整为真实代码结构；阶段 3–5 给每条落地规则补充稳定码、实际路径、用例 ID、预期与实际结果。
+阶段 2 已完成模型、输入资源边界、诊断模型、本地 CLI 和 13 份官方 Schema 的接入。表中 `tests/schema/...`、`consistency.mbt` 等是阶段 3–5 的计划位置，当前尚未全部创建；实际已经运行的用例和结果以 `docs/evidence/2026-11-09/phase2-validation.txt` 为准。完成某条规则后，应将其从“目标”更新为实际实现位置和用例 ID，并记录规范来源与预期/实际结果。

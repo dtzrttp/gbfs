@@ -13,5 +13,4 @@ preferred_target = "js"
 import {
   "moonbitlang/x@0.5.7",
   "moonbitstack/moonschema@0.2.4",
-  "moonbitstack/moonurl@0.2.3",
 }
