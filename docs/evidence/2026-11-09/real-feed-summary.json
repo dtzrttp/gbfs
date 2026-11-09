@@ -1,0 +1,124 @@
+[
+  {
+    "operator": "nextbike",
+    "date": "2026-11-09",
+    "source": "https://gbfs.nextbike.net/maps/gbfs/v2/nextbike_al/gbfs.json",
+    "language": "de",
+    "version": "2.3",
+    "license_id": "CC0-1.0",
+    "license_url": null,
+    "files": [
+      {
+        "name": "free_bike_status.json",
+        "sha256": "db74bb19b538eda227c75a31fe60a264ca8aba6a300e207b0717b511f67573fb"
+      },
+      {
+        "name": "gbfs.json",
+        "sha256": "6c5ab56d48df436458863d1086e826a009ceb0eae0e516fdd459d48bfebc9314"
+      },
+      {
+        "name": "geofencing_zones.json",
+        "sha256": "5b92e48d44688f7cc6d93f73078dcbd9e6ea705070b2b321881ea4ee3aaa3d68"
+      },
+      {
+        "name": "station_information.json",
+        "sha256": "0d87183a7e2c4ce82594958124d3635dcb51581c66c899634eeb072cad210a2f"
+      },
+      {
+        "name": "station_status.json",
+        "sha256": "f54699ea96a186edaf2aa805a7bee8512b1c25ea4ebe84372d8869217b36b77d"
+      },
+      {
+        "name": "system_hours.json",
+        "sha256": "a6a02dfcbc52806e2213227ac0a6633382734d2db78ff59b1e5e36883dce5be1"
+      },
+      {
+        "name": "system_information.json",
+        "sha256": "6a49ccae773dc079f568808b2bf57ce4cbb38476aab17d818a4a24dc896c592b"
+      },
+      {
+        "name": "system_pricing_plans.json",
+        "sha256": "2ae1702c09157032509ad2cd268693459e3f02874888cc6ae4ce6241c13f1281"
+      },
+      {
+        "name": "system_regions.json",
+        "sha256": "3663dba366f06559652ae9968df0d6e82c42c11f5fa85afeaf1e9406d14e6b77"
+      },
+      {
+        "name": "vehicle_types.json",
+        "sha256": "7ec73db926dda186c7fe5bec423a0a8b18a4bcff884adce7f387f3b246c2b51b"
+      }
+    ],
+    "exit_code": 0,
+    "errors": 0,
+    "warnings": 19,
+    "infos": 0,
+    "codes": [
+      {
+        "code": "consistency.station.capacity_exceeded",
+        "count": 19
+      }
+    ]
+  },
+  {
+    "operator": "dott",
+    "date": "2026-11-09",
+    "source": "https://gbfs.api.ridedott.com/public/v2/abu-dhabi/gbfs.json",
+    "language": "en",
+    "version": "2.3",
+    "license_id": null,
+    "license_url": null,
+    "files": [
+      {
+        "name": "free_bike_status.json",
+        "sha256": "f340c66f59f7ef6af48b0ff9efba2cf40b33360806b92ffd3330fb432ee447d8"
+      },
+      {
+        "name": "gbfs_versions.json",
+        "sha256": "e411d5c12cbed0c79e166657e86dd2e3813c5274645f2779d9fef014e82a9883"
+      },
+      {
+        "name": "gbfs.json",
+        "sha256": "70af1ec733ea2e6232051ba1789e02984467509bdd2a150704d731d2ca21bd70"
+      },
+      {
+        "name": "geofencing_zones.json",
+        "sha256": "43aaa51d0675fb22f909c2fb084a6d9dfd5a2a2bd8f8a86369f181491710e04f"
+      },
+      {
+        "name": "station_information.json",
+        "sha256": "20cecf94fbd5d8182c0e3ad9e46b4de29d83fb90d96d46459c88af832ad7b79e"
+      },
+      {
+        "name": "station_status.json",
+        "sha256": "52dad3e675c1f40b9ca4b223a63c979e17dbc235c173ce09a48f3f2c0b69177c"
+      },
+      {
+        "name": "system_information.json",
+        "sha256": "28f4ffb519366f5953fdc712c2d2e9ec032bb73ee5a85d2679a881ddf17c4809"
+      },
+      {
+        "name": "system_pricing_plans.json",
+        "sha256": "2b926006d7b3a3f51988eb44a2f92b568d913d58696da71f9790255a1aab7682"
+      },
+      {
+        "name": "vehicle_types.json",
+        "sha256": "912a8dd520615346621eed02d8333ba911ade1cb953a2aa6f6e68aacef39a5d0"
+      }
+    ],
+    "exit_code": 1,
+    "errors": 1433,
+    "warnings": 1433,
+    "infos": 0,
+    "codes": [
+      {
+        "code": "consistency.bike_count.sum_mismatch",
+        "count": 1433
+      },
+      {
+        "code": "consistency.region.unknown",
+        "count": 1433
+      }
+    ]
+  }
+]
