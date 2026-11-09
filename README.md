@@ -91,6 +91,8 @@ node tools/verify-mutations.cjs
 
 独立差分的依赖安装和执行命令见 [差分说明](docs/schema-comparison.md)。单文件上限 8 MiB，整个快照上限 64 MiB 和 256 个输入文件。解析拒绝重复对象键和超过 64 层的嵌套。报告截断时发出错误。
 
+本地发布前验证的实际命令与退出码见 [运行记录](docs/evidence/2026-11-09/release-validation.txt)。
+
 ## 限制与后续工作
 
 当前后端为 MoonBit JavaScript 和 Node.js 24，版本范围为 GBFS v2.3。跨文件检查以同一时间窗口、同一语言的一组本地文件为输入。货币检查采用 Schema 的格式约束。几何检查采用 Schema 的 GeoJSON 结构约束。单个快照无法验证车辆 ID 在行程结束后是否轮换、外链是否可达或发布频率是否稳定。后续可扩展地理语义和版本支持。

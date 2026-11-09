@@ -1,0 +1,85 @@
+GBFS v2.3 本地发布前验证
+2026-11-09T13:35:12.7942223+08:00
+
+> moon version --all
+moon 0.1.20261028 (e1e1f15 2026-10-28) ~\.moon\bin\moon.exe
+moonc v0.10.18+6c83a7f62 (2026-10-28) \\?\<用户目录>\.moon\bin\moonc.exe
+moonrun 0.1.20261028 (e1e1f15 2026-10-28) \\?\<用户目录>\.moon\bin\moonrun.exe
+
+Feature flags enabled: rr_moon_mod,rr_moon_pkg
+exit_code=0
+
+> node --version
+v24.19.0
+exit_code=0
+
+> moon fmt --check
+Finished. moon: ran 19 tasks, now up to date
+exit_code=0
+
+> moon check --target js --deny-warn
+Finished. moon: no work to do
+exit_code=0
+
+> moon test --target js --deny-warn
+仅完成 JSON 语法解析；未运行 GBFS Schema 或跨文件校验。0 个错误，0 个警告，0 条信息。
+仅完成 JSON 语法解析；未运行 GBFS Schema 或跨文件校验。0 个错误，0 个警告，0 条信息。
+{
+  "tool": "gbfs.mbt",
+  "result": "syntax_only",
+  "schema_validation": "not_run",
+  "errors": 1,
+  "warnings": 0,
+  "infos": 0,
+  "diagnostics": [
+    {
+      "file": "tests/fixtures/parser/invalid.json",
+      "pointer": "",
+      "severity": "error",
+      "code": "json.invalid",
+      "message": "JSON 语法无效、含有重复对象键或嵌套超过 64 层",
+      "actual": null,
+      "expected": "无重复键且嵌套不超过 64 层的合法 JSON",
+      "suggestion": "修复 JSON 语法、移除重复键，并降低嵌套深度",
+      "source": "本工具的离线 JSON 输入安全边界",
+      "schema_pointer": null
+    }
+  ]
+}
+GBFS v2.3 快照校验完成：0 个错误，0 个警告，0 条信息。
+GBFS v2.3 快照校验完成：0 个错误，0 个警告，0 条信息。
+GBFS v2.3 快照校验完成：0 个错误，0 个警告，0 条信息。
+[错误] free_bike_status.json（根） feed.missing 快照缺少必需的 GBFS v2.3 文件
+  实际值=（无）；期望=提供 free_bike_status.json
+  建议=从同一运营方的 GBFS v2.3 发布目录补充此文件
+  来源=docs/spec-map.md 的 v2.3 文件范围
+GBFS v2.3 快照校验完成：1 个错误，0 个警告，0 条信息。
+Total tests: 35, passed: 35, failed: 0.
+exit_code=0
+
+> moon build --target js --deny-warn
+Artifacts:
+Finished. moon: no work to do
+  dtzrttp/gbfs/cmd/main  js  <项目目录>\_build\js\debug\build\cmd\main\main.js
+exit_code=0
+
+> node tools/embed-schemas.cjs --check
+exit_code=0
+
+> node tools/verify-cli.cjs
+CLI 集成验证通过：目录、显式文件、JSON 报告、解析错误、版本拒绝、未知端点、UTF-8 与退出码。
+exit_code=0
+
+> node tools/verify-mutations.cjs
+{"seed":7038579,"cases":30,"passed":30,"counts":{"deletion":10,"type":10,"reference":10},"inputOrders":2}
+exit_code=0
+
+> npm ci --prefix tools/schema-reference --offline --ignore-scripts --no-audit --no-fund --cache _build/npm-cache
+
+added 6 packages in 1s
+exit_code=0
+
+> node tools/schema-reference/compare.cjs > _build/schema-comparison.json
+exit_code=0
+{"total":96,"agreements":94,"differences":["versions.not_increasing","hours.spec_extended_time"],"unexpected":[]}
+git hash-object --no-filters：13/13 原始 Schema 与上游 blob 相同

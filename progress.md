@@ -12,7 +12,7 @@
 - 检查 PDDL 歧义命中 README、search.mbt、search_wbtest.mbt；确认其实现贪心最佳优先规划，不是 GBFS feed 工具。
 - 比较 v2.3 和最新正式 v3.1，选择 v2.3；取得 13 份原始 v2.3 Schema、blob SHA、字段摘要及官方系统目录版本统计。
 - 实际读取 v2.3、Schema、validator 的许可证线索；不分发许可证不明的 feed 夹具。
-- 写入 docs/dedup.md、docs/decisions.md、docs/spec-map.md、docs/plan.md。阶段 1 已由 `31f8b32` 提交。
+- 写入 docs/dedup.md、docs/decisions.md、docs/spec-map.md、docs/plan.md。阶段 1 已由 `d2175e3` 提交。
 
 ### 阶段 2 与单文件 Schema 开发
 

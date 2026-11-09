@@ -27,3 +27,9 @@ jobs:
       - run: moon build --target js --deny-warn
       - run: node tools/embed-schemas.cjs --check
       - run: node tools/verify-cli.cjs
+      - run: node tools/verify-mutations.cjs
+      - run: npm ci --prefix tools/schema-reference --ignore-scripts --no-audit --no-fund
+      - name: 对照官方 Schema
+        run: |
+          node tools/schema-reference/compare.cjs > _build/schema-comparison.json
+          node -e 'const r=require("./_build/schema-comparison.json"); console.log(JSON.stringify({total:r.total,agreements:r.agreements,differences:r.differences,unexpected:r.unexpected}))'
