@@ -23,8 +23,9 @@
 - 2026-11-09 实际运行 `moon test --target js --deny-warn`：23/23 通过；`moon fmt --check`、`moon check --target js --deny-warn`、`moon build --target js --deny-warn`、Schema 嵌入检查、CLI 集成验证均退出码 0。目录模式 JSON 示例返回 0 错误。完整输出见 `docs/evidence/2026-11-09/phase2-validation.txt`。跨文件检查和官方工具差分尚未完成。
 - 在一次混合递归删除命令上，自动审核因目标同时包含代码/测试文件而拒绝；没有再次运行该命令，旧 v3.0 原型素材保留但从当前活动路径退出。
 
-### 下一步
+### 阶段 3 至 5
 
-- 完成逐规则单文件正反例、Schema 与官方 validator 的差分及差异说明。
-- 查证 v2.3 规范/validator 对字段引用、ID 唯一性、容量和时间的强制/建议语义，按依据实现跨文件规则。
-- 把项目 README、规范映射、CLI verifier 与 CI 更新到当前 v2.3 行为；完成后分批提交。
+- 单文件规则接入 13 份原样 Schema，补充跨午夜营业时间和版本目录递增规则。Ajv 差分 96 个，94 个一致，2 个预期差异，0 个意外差异。
+- 跨文件校验支持发现清单、双向站点对应、区域/车型/价格/车辆引用、条件字段、容量和时间。两项运营模式可显式选择。
+- 固定种子变更 30/30，真实快照运行 2 份，详见 docs/real-feed-validation.md。
+- 本机 MoonBit JS 测试 35/35，CLI 集成和构建通过。旧 v3.0 原型留档，当前入口固定 v2.3。

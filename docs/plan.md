@@ -91,7 +91,8 @@
 
 - 阶段 1 已完成并提交：`31f8b32`。
 - 阶段 2 基础已实现：`model.mbt` 固定 v2.3 版本与 13 个端点；`parser.mbt` 以 `UntrustedDocument` 标记尚未校验的 JSON，并限制 UTF-8 输入字节、嵌套深度与重复键；`diagnostic.mbt` / `report.mbt` 提供 error/warning/info、实际值、期望、建议、来源和稳定排序；CLI 可读目录或显式文件列表。
-- 阶段 3 已接入 `schemas/v2.3/` 下全部官方 Schema；来源提交 SHA 与各文件 Git blob SHA 均可复核。`schema_validation.mbt` 目前由固定 Schema 生成验证，`v2_3_model_wbtest.mbt` 覆盖 13 个合成最小正例、版本、坐标与枚举负例。所有单项规则还未逐一成对测试，也尚无官方 validator 差分。
-- 当前 `validate_snapshot` 只校验文件 Schema 和入口文件存在性，**尚未执行跨文件引用/数量关系检查**；CLI 文案如实标记这一限制。
+- 阶段 3 接入 13 份官方 Schema 和两项有正文依据的修正。单文件差分覆盖 96 个样例，94 个一致，2 个差异已记录。该组用例未穷举所有可选字段。见 [差分记录](schema-comparison.md)。
+- 阶段 4 提供发现清单、语言、站点、车型、车辆、区域、价格、容量及时间检查。支持显式有桩和无桩模式。实现和当前边界见 [规范映射](spec-map.md)。
+- 阶段 5 完成 30 个固定种子变更用例和两份真实快照验证。真实快照许可与结果见 [真实验证](real-feed-validation.md)。
 - 2026-11-09 阶段验证：`moon fmt --check`、`moon check --target js --deny-warn`、`moon build --target js --deny-warn`、Schema 嵌入一致性检查、CLI 集成验证均退出码 0；`moon test --target js --deny-warn` 为 23/23。目录模式 JSON 报告返回 0 错误。完整输出见 `docs/evidence/2026-11-09/phase2-validation.txt`。
 - 旧 v3.0 原型素材保留在历史目录中，不属于当前活动支持路径。一个混合递归删除命令被自动审核拒绝后，未重试该批量操作；活动实现改为 v2.3 文件，不依赖清理旧目录才能继续。

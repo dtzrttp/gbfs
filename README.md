@@ -1,120 +1,98 @@
 # gbfs.mbt
 
-MoonBit 编写的 GBFS（General Bikeshare Feed Specification）离线静态校验工具。首版范围固定为 **GBFS v2.3**，读取运营方本地 JSON 文件，使用 MobilityData 固定提交中的 13 份官方 JSON Schema 进行单文件结构校验，并以确定顺序输出诊断。
+gbfs.mbt 用 MoonBit 校验共享单车和微出行系统的 **GBFS v2.3** 本地快照。它读取目录或明确列出的 JSON 文件，检查单文件结构、发现清单与实体引用，并输出可定位的文本或 JSON 诊断。
 
-> 开发状态：正在完成首版。当前已接入全部 13 个 v2.3 Schema、JSON 资源限制、诊断模型及本地目录/显式文件 CLI。跨文件引用与数量关系检查、官方 validator 差分、随机变更测试和发布前互通尚未完成；当前测试通过不代表整个首版验收完成。
+## 支持范围
 
-## 支持矩阵
+| 端点 | 检查内容 |
+| --- | --- |
+| `gbfs.json`、`gbfs_versions.json` | 发现清单、语言对应、文件对应、版本目录顺序 |
+| `system_information.json` | 系统、语言、时区、联系方式等字段 |
+| `station_information.json`、`station_status.json` | 站点结构、双向引用、区域和车型引用、可用量、容量 |
+| `free_bike_status.json`、`vehicle_types.json` | 车辆与车型结构、坐标、条件续航、站点和价格引用 |
+| `system_pricing_plans.json`、`system_regions.json` | 价格和区域字段、ID、被引用的实体 |
+| `system_hours.json`、`system_calendar.json`、`system_alerts.json` | 营业时间、日历、告警、站点和区域引用 |
+| `geofencing_zones.json` | GeoJSON 结构和规则字段 |
 
-| GBFS 端点 | Schema 校验 | 跨文件关系 |
-| --- | --- | --- |
-| `gbfs.json` | v2.3 官方 Schema | 开发中 |
-| `gbfs_versions.json` | v2.3 官方 Schema | 开发中 |
-| `system_information.json` | v2.3 官方 Schema | 开发中 |
-| `station_information.json` | v2.3 官方 Schema | 开发中 |
-| `station_status.json` | v2.3 官方 Schema | 开发中 |
-| `free_bike_status.json` | v2.3 官方 Schema | 开发中 |
-| `vehicle_types.json` | v2.3 官方 Schema | 开发中 |
-| `system_hours.json` | v2.3 官方 Schema | 开发中 |
-| `system_alerts.json` | v2.3 官方 Schema | 开发中 |
-| `system_calendar.json` | v2.3 官方 Schema | 开发中 |
-| `system_regions.json` | v2.3 官方 Schema | 开发中 |
-| `system_pricing_plans.json` | v2.3 官方 Schema | 开发中 |
-| `geofencing_zones.json` | v2.3 官方 Schema | 开发中 |
+首版使用 13 份固定提交的 v2.3 官方 Schema。逐条规则、错误码、来源和测试见 [规范映射](docs/spec-map.md)。
 
-不支持 GBFS v1、v2.0–v2.2、v3.0、v3.1 或未来版本。v2.3 使用 `free_bike_status.json`；`vehicle_status.json` 不属于本版本范围。旧原型资料仍在仓库历史目录中，但不属于当前活动实现、支持矩阵或测试结论。
+## 安装与运行
 
-## 本地运行
-
-主目标是 Node.js 24 的 MoonBit JS 后端。当前开发环境使用 `moon 0.1.20261028`、`moonc v0.10.18+6c83a7f62` 和 Node.js `v24.19.0`。
+按照官方安装说明准备 MoonBit 工具链和 Node.js 24。开发验证使用 `moon 0.1.20261028`、`moonc v0.10.18+6c83a7f62` 和 Node.js `v24.19.0`。 [MoonBit 安装说明](https://docs.moonbitlang.com/en/latest/tutorial/tour.html#installation)
 
 ```sh
-moon check --target js --deny-warn
-moon test --target js --deny-warn
+git clone https://github.com/dtzrttp/gbfs.mbt.git
+cd gbfs.mbt
+moon update
 moon build --target js --deny-warn
 ```
 
-对一个本地目录或显式文件列表执行 v2.3 Schema 校验：
+构建完成后可以离线运行。以下命令使用仓库自带的合成快照。
 
 ```sh
-moon run cmd/main --target js -- check ./feed-snapshot
-moon run cmd/main --target js -- check ./feed-snapshot --json
-moon run cmd/main --target js -- check ./feed-snapshot/gbfs.json ./feed-snapshot/system_information.json ./feed-snapshot/station_status.json
+# 校验有桩系统的完整目录
+node _build/js/debug/build/cmd/main/main.js check tests/fixtures/v2.3/snapshot --docked
+
+# 在 CI 或接入程序中读取 JSON 报告
+node _build/js/debug/build/cmd/main/main.js check tests/fixtures/v2.3/snapshot --json
+
+# 单独诊断一个端点文件
+node _build/js/debug/build/cmd/main/main.js file tests/fixtures/v2.3/snapshot/station_status.json --json
 ```
 
-`check` 不联网。目录模式仅读取该目录顶层的 `.json` 文件；显式文件模式按文件名识别端点。单文件超过 8 MiB、整批超过 256 个文件或 64 MiB、JSON 深度超过 64 层或包含重复对象键时会拒绝输入。单文件最多输出 1,000 条、整个快照最多输出 5,000 条诊断；触发上限时会明确报告结果不完整并以错误退出。
+也可以将同一语言快照中的文件路径逐一传给 `check`。文件名按规范端点命名，目录模式读取顶层 JSON。指定 `--docked` 要求站点信息和站点状态，指定 `--free-floating` 要求车辆状态文件，两项可组合。对刚取得的快照可加 `--freshness`，用本机时间检查近实时延迟。归档快照默认只做与当前时间无关的检查。
 
-退出码 `0` 表示当前已实现的校验没有错误；`1` 表示数据诊断中存在错误；`2` 表示命令参数或文件输入问题。当前报告明确显示跨文件关系规则仍在开发中。
+`parse` 只检查 JSON 语法和输入边界，`file` 运行单文件规则，`check` 在输入文件通过单文件规则后运行跨文件规则。退出码 0 表示无错误，1 表示有数据错误，2 表示参数或本地文件输入错误。警告单独计数。
 
-## JSON 报告
+## JSON 报告示例
 
-`--json` 返回固定 GBFS 版本、错误/警告/信息计数以及诊断数组。诊断包含文件、RFC 6901 JSON Pointer、稳定码、实际值、期望规则、修复建议和来源；JSON 解析错误的指针为空字符串，表示根位置。
+以下是缺少站点定义时的一条示例诊断。路径使用 RFC 6901 JSON Pointer。
 
 ```json
 {
-  "version": "2.3",
-  "errors": 1,
-  "warnings": 0,
-  "infos": 0,
-  "diagnostics": [
-    {
-      "file": "station_information.json",
-      "pointer": "/data/stations/0/lat",
-      "severity": "error",
-      "code": "schema.maximum",
-      "message": "字段值高于允许范围",
-      "actual": "91",
-      "expected": "满足 Schema 的 maximum 约束",
-      "suggestion": "按官方 v2.3 Schema 修正该字段",
-      "source": "固定提交中的 MobilityData v2.3 Schema",
-      "schema_pointer": "/..."
-    }
-  ]
+  "file": "station_status.json",
+  "pointer": "/data/stations/0/station_id",
+  "severity": "error",
+  "code": "consistency.station_status.unknown_station",
+  "message": "站点状态引用了未知站点",
+  "actual": "s2",
+  "expected": "station_id 必须出现在 station_information.json 的 stations 中",
+  "suggestion": "修正 station_id，或补充对应站点信息记录",
+  "source": "https://github.com/MobilityData/gbfs/blob/4f0cc7024ff5ba71d3c3e861c3ff23a281ef71f8/gbfs.md",
+  "schema_pointer": null
 }
 ```
 
-以上为结构示意，不是一次完整运行的逐字输出。
-
-## MoonBit API
-
-```moonbit
-let issues = @gbfs.validate_file(
-  "vehicle_types",
-  "{\"last_updated\":1450155600,\"ttl\":0,\"version\":\"2.3\",\"data\":{\"vehicle_types\":[]}}",
-)
-if @gbfs.has_errors(issues) {
-  // 处理诊断
-}
-```
-
-`parse_json_untrusted` 返回带有 `UntrustedDocument` 类型标记的数据；JSON 解析成功不等于 GBFS Schema 校验通过。`validate_file` 固定校验 v2.3，调用方必须明确提供端点名；不会根据输入版本切换规则。
-
-## 诊断规则与阶段进展
-
-当前单文件结构规则来自仓库固定提交的官方 v2.3 JSON Schema，覆盖必填字段、类型、常量、枚举、格式、模式、边界、数组和条件结构。测试已对全部 13 份 Schema 各运行一个合成最小正例，并覆盖版本错误、越界坐标和车辆形式非法枚举。逐规则测试矩阵和与官方 validator 的差分报告尚未完成。
-
-计划完成的跨文件规则包括发现清单与本地文件对齐、站点/状态互相引用、车辆站点/车型/价格计划引用、ID 唯一性及有明确规范依据的数量关系。强制规则与建议规则将分开报告；无法从 v2.3 原文或官方工具确认的检查不会升级为错误。
+完整报告包含 `version`、`errors`、`warnings`、`infos` 和 `diagnostics`。库接口 `validate_file` 接收不带扩展名的端点名和 JSON 文本。`validate_snapshot` 接收端点名到文本的 Map，`validate_snapshot_with_options` 可指定运营模式和 POSIX 秒参考时间。语法解析的 `UntrustedDocument` 需另行校验。
 
 ## 应用场景
 
-1. 出行数据平台在接入运营方 feed 前执行离线质量检查。
-2. 城市开放数据管理者检查运营方公开的文件是否满足 GBFS v2.3 结构。
-3. 研究人员或开发者在数据清洗前发现结构无效的站点、车辆或价格数据。
+1. **平台接入。** 出行数据平台以 `check --json` 生成机器可读报告，在接入运营方 feed 前阻止结构或引用错误。
+2. **开放数据检查。** 城市开放数据管理者以 `check --docked` 或 `check --free-floating` 核对必需端点，用文本报告把问题定位到具体文件和字段。
+3. **研究与清洗。** 在数据清洗前以 `file` 检查单个价格文件，再以 `check` 查找不存在的站点、车型和价格计划引用。
 
-## 边界与限制
+## 验证结果
 
-- 当前只实现固定 v2.3 Schema 和本地输入，不下载远程 feed。
-- 跨文件业务关系规则尚未完成；目前 Schema 通过不能视为整套快照语义正确。
-- 不实现地图、路线、调度、支付、用户账号、租车、爬虫或数据库。
-- 不把 Schema 校验成功解释为运营方身份可信、服务在线或数据新鲜。
-- GBFS 本身不提供令牌撤销或防重放能力；本工具不处理认证。
-- 主目标为 Node.js 24；其他 MoonBit 后端未验证。
-- 项目尚未经过独立安全审计，不承诺生产级安全。
+- MoonBit JS 后端 35 项测试通过。CLI 集成检查覆盖目录、显式路径、JSON 输出、无效 UTF-8 和退出码。
+- 独立 Ajv 引擎对照 96 个单文件用例，94 个一致，2 个正文与 Schema 的差异均已解释。 [差分结果](docs/schema-comparison.md)
+- 固定种子的 30 个变更样例全部通过。测试覆盖字段删除、类型替换和站点 ID 变更，并比较两种输入顺序的报告。
+- 两份真实运营方快照已离线运行。Linz 为 0 错误、19 警告，Dott Abu Dhabi 为 1,433 错误、1,433 警告。 [真实快照结果](docs/real-feed-validation.md)
+- 在 Mooncakes 和 GitHub 的复查中未发现同题的 MoonBit GBFS 项目。 [查询与完整输出](docs/dedup.md)
 
-## 规范与许可
+```sh
+moon fmt --check
+moon check --target js --deny-warn
+moon test --target js --deny-warn
+moon build --target js --deny-warn
+node tools/embed-schemas.cjs --check
+node tools/verify-cli.cjs
+node tools/verify-mutations.cjs
+```
 
-规范选择、查重、提交 SHA、Schema 来源和许可证判断见 [版本决策](docs/decisions.md)、[查重记录](docs/dedup.md)、[规范映射](docs/spec-map.md) 与 [第三方材料](NOTICE.md)。项目代码采用 Apache-2.0。原始 Schema 保存在 `schemas/v2.3/`，嵌入源可通过 `node tools/embed-schemas.cjs --check` 核对。许可证不明的官方真实 feed 不随仓库分发；当前测试样例为自行构造数据。
+独立差分的依赖安装和执行命令见 [差分说明](docs/schema-comparison.md)。单文件上限 8 MiB，整个快照上限 64 MiB 和 256 个输入文件。解析拒绝重复对象键和超过 64 层的嵌套。报告截断时发出错误。
 
-## 验证状态
+## 限制与后续工作
 
-开发记录与阶段计划见 [docs/plan.md](docs/plan.md) 和根目录的 `progress.md`。截至 2026-11-09，`moon test --target js --deny-warn` 实际运行结果为 23/23 通过；此结果只描述当前已编写测试，不代表官方 validator 差分、跨文件规则、随机变更测试或其他后端已经通过。阶段验证输出保存在 `docs/evidence/2026-11-09/phase2-validation.txt`。
+当前后端为 MoonBit JavaScript 和 Node.js 24，版本范围为 GBFS v2.3。跨文件检查以同一时间窗口、同一语言的一组本地文件为输入。货币检查采用 Schema 的格式约束。几何检查采用 Schema 的 GeoJSON 结构约束。单个快照无法验证车辆 ID 在行程结束后是否轮换、外链是否可达或发布频率是否稳定。后续可扩展地理语义和版本支持。
+
+项目代码使用 Apache-2.0。官方 Schema 的来源和署名、参考工具与依赖许可证见 [第三方材料](NOTICE.md) 和 [版本决策](docs/decisions.md)。
