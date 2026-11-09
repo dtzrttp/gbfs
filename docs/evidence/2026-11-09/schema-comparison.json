@@ -1,9 +1,10 @@
 {
   "schemaCommit": "01d4cb480410ca234b1d76799daf474b8f839e85",
   "engine": "Ajv 8.17.1 + ajv-formats 2.1.1",
-  "total": 95,
+  "total": 96,
   "agreements": 94,
   "differences": [
+    "versions.not_increasing",
     "hours.spec_extended_time"
   ],
   "unexpected": [],
@@ -1291,6 +1292,21 @@
         [
           "/data/versions/0/url",
           "schema.format"
+        ]
+      ]
+    },
+    {
+      "id": "versions.not_increasing",
+      "feed": "gbfs_versions",
+      "expected": true,
+      "expectedMoonBit": false,
+      "reference": true,
+      "moonbit": false,
+      "referenceRules": [],
+      "moonbitRules": [
+        [
+          "/data/versions/1/version",
+          "version.not_increasing"
         ]
       ]
     },

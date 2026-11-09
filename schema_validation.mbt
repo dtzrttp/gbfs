@@ -206,10 +206,31 @@ fn validate_document_schema(feed : String, value : Json) -> Array[Diagnostic] {
       }
     }
   })
-  limit_diagnostics(
-    applicable.map(fault => schema_issue(feed, value, fault)),
-    1000,
-  )
+  let diagnostics = applicable.map(fault => schema_issue(feed, value, fault))
+  if feed == "gbfs_versions" &&
+    diagnostics.is_empty() &&
+    json_field(value, "data") is Some(data) {
+    let mut previous : String? = None
+    for index, entry in json_items(json_field(data, "versions")) {
+      guard row_identifier(entry, "version") is Some(current) else { continue }
+      // v2.3 Schema 的枚举值均为单字符主版本和次版本。
+      if previous is Some(last) && current <= last {
+        diagnostics.push(
+          relation_diagnostic(
+            feed,
+            "/data/versions/" + index.to_string() + "/version",
+            "version.not_increasing",
+            "版本列表未按版本号递增",
+            "按主版本、次版本递增排列，每个版本只出现一次",
+            "将 versions 中的条目按版本号排序并合并重复项",
+            actual=current,
+          ),
+        )
+      }
+      previous = Some(current)
+    }
+  }
+  limit_diagnostics(diagnostics, 1000)
 }
 
 ///|

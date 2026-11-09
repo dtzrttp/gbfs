@@ -10,6 +10,25 @@ fn v23_document(data : Json) -> String {
 }
 
 ///|
+test "版本发现文件要求按主版本和次版本严格递增" {
+  fn listing(a : String, b : String) -> String {
+    v23_document({
+      "versions": [
+        { "version": a, "url": "https://example.org/older" },
+        { "version": b, "url": "https://example.org/newer" },
+      ],
+    })
+  }
+  assert_eq(validate_file("gbfs_versions", listing("2.3", "3.0")).length(), 0)
+  for source in [listing("3.0", "2.3"), listing("2.3", "2.3")] {
+    let diagnostics = validate_file("gbfs_versions", source)
+    assert_eq(diagnostics.length(), 1)
+    assert_eq(diagnostics[0].code, "version.not_increasing")
+    assert_eq(diagnostics[0].pointer, "/data/versions/1/version")
+  }
+}
+
+///|
 test "v2.3 公开端点清单包含全部十三个固定文件" {
   assert_eq(gbfs_version(), "2.3")
   assert_eq(supported_feeds(), [

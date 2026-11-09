@@ -47,7 +47,7 @@ try {
       compare(`required.${feed}.${field}`, feed, input, false);
     }
   }
-  for (const [id, feed, pointer, value, operation, expectedMoonBit] of fixture.mutations) {
+  for (const [id, feed, pointer, value, operation, expectedMoonBit, expectedReference = false] of fixture.mutations) {
     const input = envelope(feed);
     const parent = pointer.slice(0, -1).reduce((object, segment) => object[segment], input);
     const key = pointer.at(-1);
@@ -57,7 +57,7 @@ try {
     } else {
       parent[key] = value;
     }
-    compare(id, feed, input, false, expectedMoonBit);
+    compare(id, feed, input, expectedReference, expectedMoonBit);
   }
   const mismatches = results.filter(row => row.reference !== row.moonbit);
   const unexpected = results.filter(row =>

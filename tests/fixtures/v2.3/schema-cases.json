@@ -19,6 +19,7 @@
     ["discovery.bad_name", "gbfs", ["data","en","feeds",1,"name"], "vehicle_status"],
     ["discovery.bad_uri", "gbfs", ["data","en","feeds",1,"url"], "/vehicles"],
     ["versions.bad_uri", "gbfs_versions", ["data","versions",0,"url"], "not a URI"],
+    ["versions.not_increasing", "gbfs_versions", ["data","versions"], [{"version":"3.0","url":"https://example.org/3.0/gbfs.json"},{"version":"2.3","url":"https://example.org/2.3/gbfs.json"}], "set", false, true],
     ["system.bad_email", "system_information", ["data","email"], "invalid"],
     ["system.bad_language", "system_information", ["data","language"], "123"],
     ["system.bad_timezone", "system_information", ["data","timezone"], "Mars/Olympus"],
