@@ -1,3 +1,6 @@
 * text=auto eol=lf
 /schemas/v3.0/*.json -text -whitespace
+/docs/evidence/2026-11-09/recheck/schema-v2.3/*.json -text -whitespace
+/docs/evidence/2026-11-09/recheck/*.txt -whitespace
+/docs/evidence/2026-11-09/recheck/schema-v2.3/*.txt -whitespace
 /tests/official/*.json -text -whitespace

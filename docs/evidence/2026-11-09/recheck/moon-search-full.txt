@@ -1,0 +1,71 @@
+> moon search "gbfs"
+1 module found
+
+sa2360/pddl@0.2.0 (43 downloads)
+  A PDDL 2.1 Level 1 (classical + numeric fluents) planning engine and independent plan validator for MoonBit.
+  Repository: https://github.com/sa2360/pddl
+
+  sa2360/pddl
+    moonpddl is a MoonBit PDDL planning engine and standalone plan validator supporting PDDL 2.1 Level 1 with numeric fluents. It parses domain and problem files, grounds them into a state-space task, searches with heuristics such as hmax, hadd, and hff under GBFS, A*, or weighted A*, and independently replays plans to check applicability, goals, and cost.
+
+Run `moon add <module>@<version>` to add a dependency.
+[exit=0]
+
+> moon search "general bikeshare feed specification"
+No modules found.
+[exit=0]
+
+> moon search "bikeshare"
+No modules found.
+[exit=0]
+
+> moon search "bike share"
+1 module found
+
+bobzhang/games@0.9.33 (1391 downloads)
+  —
+  Repository: https://github.com/bobzhang/games
+
+Run `moon add <module>@<version>` to add a dependency.
+[exit=0]
+
+> moon search "micromobility"
+No modules found.
+[exit=0]
+
+> moon search "station_information"
+2 modules found
+
+dgmlbtttt/iec104@0.2.1 (35 downloads)
+  Pure MoonBit IEC 60870-5-104 protocol stack and deterministic substation simulation toolkit.
+  Repository: https://github.com/dgmlbtttt/moonbit-iec104
+
+bobzhang/games@0.9.33 (1391 downloads)
+  —
+  Repository: https://github.com/bobzhang/games
+
+Run `moon add <module>@<version>` to add a dependency.
+[exit=0]
+
+> moon search "vehicle_status"
+3 modules found
+
+bobzhang/games@0.9.33 (1391 downloads)
+  —
+  Repository: https://github.com/bobzhang/games
+
+moonbit-community/dummy@0.0.1 (21 downloads)
+  —
+  Repository: https://github.com/moonbit-community/dummy.mbt
+
+Milky2018/moon_rapier@0.5.2 (16448 downloads)
+  A Physics library in MoonBit.
+  Repository: https://github.com/moonbit-community/moon_rapier
+
+Run `moon add <module>@<version>` to add a dependency.
+[exit=0]
+
+> moon search "mobilitydata"
+No modules found.
+[exit=0]
+

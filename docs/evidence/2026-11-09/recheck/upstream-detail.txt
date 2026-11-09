@@ -1,0 +1,40 @@
+> gh api repos/MobilityData/gbfs/git/ref/tags/v2.3 --jq '.object.type + " " + .object.sha'
+tag 2c323f7c3529980ebdc7b5ae2140754b7ceb93b0
+[exit=0]
+
+> gh api repos/MobilityData/gbfs/git/ref/tags/v3.1 --jq '.object.type + " " + .object.sha'
+commit 06dddf8d087df8f9c419953c2dc7ce73100e44d8
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-json-schema/contents/v2.3 --jq '[.[].name]'
+["free_bike_status.json","gbfs.json","gbfs_versions.json","geofencing_zones.json","station_information.json","station_status.json","system_alerts.json","system_calendar.json","system_hours.json","system_information.json","system_pricing_plans.json","system_regions.json","vehicle_types.json"]
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-json-schema/contents/testFixtures/v2.3 --jq '[.[].name]'
+["free_bike_status.json","gbfs.json","gbfs_versions.json","geofencing_zones.json","station_information.json","station_status.json","system_alerts.json","system_calendar.json","system_hours.json","system_information.json","system_pricing_plans.json","system_regions.json","vehicle_types.json"]
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-validator/contents/README.md --jq '.download_url'
+https://raw.githubusercontent.com/MobilityData/gbfs-validator/master/README.md
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-validator/contents/RULES.md --jq '.sha'
+c93592bfd8e51d0774e8866f4af5e2a777a0006a
+[exit=0]
+
+> gh api repos/sa2360/pddl --jq '{name,description,default_branch,license:.license.spdx_id,pushed_at,html_url}'
+{"default_branch":"main","description":"A PDDL planning engine and independent plan validator for MoonBit.","html_url":"https://github.com/sa2360/pddl","license":"MIT","name":"pddl","pushed_at":"2026-10-24T20:55:02Z"}
+[exit=0]
+
+> gh api repos/sa2360/pddl/contents --jq '[.[]|{name,type}]'
+[{"name":".github","type":"dir"},{"name":".gitignore","type":"file"},{"name":"LICENSE","type":"file"},{"name":"README.en.md","type":"file"},{"name":"README.md","type":"file"},{"name":"ast.mbt","type":"file"},{"name":"bench_wbtest.mbt","type":"file"},{"name":"cmd","type":"dir"},{"name":"conformance_wbtest.mbt","type":"file"},{"name":"error.mbt","type":"file"},{"name":"examples","type":"dir"},{"name":"extends.mbt","type":"file"},{"name":"fixtures_wbtest.mbt","type":"file"},{"name":"ground.mbt","type":"file"},{"name":"ground_wbtest.mbt","type":"file"},{"name":"heuristics.mbt","type":"file"},{"name":"lexer.mbt","type":"file"},{"name":"moon.mod","type":"file"},{"name":"moon.pkg","type":"file"},{"name":"parser.mbt","type":"file"},{"name":"parser_wbtest.mbt","type":"file"},{"name":"pkg.generated.mbti","type":"file"},{"name":"search.mbt","type":"file"},{"name":"search_wbtest.mbt","type":"file"},{"name":"sexp.mbt","type":"file"},{"name":"validate.mbt","type":"file"},{"name":"validate_wbtest.mbt","type":"file"},{"name":"申报书-moonpddl.md","type":"file"}]
+[exit=0]
+
+> gh search code GBFS --repo sa2360/pddl --json repository,path,url --limit 30
+[]
+[exit=0]
+
+> gh api repos/MobilityData/gbfs/contents/systems.csv?ref=v3.1 --jq '{size,sha,download_url}'
+
+[exit=1]
+

@@ -1,0 +1,15 @@
+2026-11-09（Asia/Shanghai）只读源码检查记录。
+
+查询仓库：https://github.com/sa2360/pddl
+
+实际查看文件：
+- README.md
+- search.mbt
+- search_wbtest.mbt
+- conformance_wbtest.mbt
+
+仓库 API 返回主语言 MoonBit、默认分支 main、最近推送 2026-10-24；文件树显示 README、规划器实现与搜索/符合性测试。
+
+README 说明其产品是 PDDL 2.1 Level 1 规划器及独立计划验证器。search.mbt 实现 GBFS、A* 与加权 A* 搜索；search_wbtest.mbt 含 greedy best first 测试。GBFS 在此仅代表 Greedy Best-First Search，与 General Bikeshare Feed Specification 无关。没有共享出行 feed JSON、站点/车辆 Schema、GBFS 校验 API 或测试。
+
+该仓库源文件没有复制到项目；只保存以上检查结论和文件名，源码仍以 GitHub 原仓库为准。

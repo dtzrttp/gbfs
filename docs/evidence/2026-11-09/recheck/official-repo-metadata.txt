@@ -1,0 +1,44 @@
+> gh api repos/MobilityData/gbfs/git/ref/tags/v3.1 --jq .object.sha
+06dddf8d087df8f9c419953c2dc7ce73100e44d8
+[exit=0]
+
+> gh api repos/MobilityData/gbfs/git/ref/tags/v2.3 --jq .object.sha
+2c323f7c3529980ebdc7b5ae2140754b7ceb93b0
+[exit=0]
+
+> gh api repos/MobilityData/gbfs/commits/master --jq .sha
+328bacf31d2ea177d9a0dfe55467f55540ac8fab
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-json-schema/commits/master --jq .sha
+01d4cb480410ca234b1d76799daf474b8f839e85
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-validator/commits/master --jq .sha
+b734086ccdf93b5acd72bb349c6fda0c9f64fd39
+[exit=0]
+
+> gh api repos/MobilityData/gbfs/contents --jq `[.[]|{name,type}]`
+[{"name":".github","type":"dir"},{"name":".gitignore","type":"file"},{"name":"LICENSE","type":"file"},{"name":"README.md","type":"file"},{"name":"gbfs.md","type":"file"},{"name":"governance.md","type":"file"},{"name":"images","type":"dir"},{"name":"scripts","type":"dir"},{"name":"systems.csv","type":"file"}]
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-json-schema/contents --jq `[.[]|{name,type}]`
+[{"name":".gitattributes","type":"file"},{"name":".github","type":"dir"},{"name":".gitignore","type":"file"},{"name":"CONTRIBUTING.md","type":"file"},{"name":"LICENSE","type":"file"},{"name":"README.md","type":"file"},{"name":"models","type":"dir"},{"name":"scripts","type":"dir"},{"name":"testFixtures","type":"dir"},{"name":"v1.0","type":"dir"},{"name":"v1.1","type":"dir"},{"name":"v2.0","type":"dir"},{"name":"v2.1","type":"dir"},{"name":"v2.2","type":"dir"},{"name":"v2.3","type":"dir"},{"name":"v3.0","type":"dir"},{"name":"v3.1-RC3","type":"dir"}]
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-json-schema/contents/v2.3 --jq `[.[]|{name,sha}]`
+[{"name":"free_bike_status.json","sha":"6b6eb5b4a959892f6a06e55fa5d797c1ebacf67f"},{"name":"gbfs.json","sha":"0203427b1433c6a4881bb8145e0d69e6ee205a26"},{"name":"gbfs_versions.json","sha":"9898465df8518545de4716b395b7348407328dbe"},{"name":"geofencing_zones.json","sha":"6bd5917847620b23abd65ae880ecf5724076f941"},{"name":"station_information.json","sha":"7fc079da4c2b237669e3528590fdf7e7ce748bc9"},{"name":"station_status.json","sha":"c6db772d3c2f21125422e333106e070b9eda38ac"},{"name":"system_alerts.json","sha":"b19db8ba41a6a25eed22e5d266d398f1732a495c"},{"name":"system_calendar.json","sha":"688f311283abacf092c5c0bc99e483dc51389efc"},{"name":"system_hours.json","sha":"49c6c73e86c526c7285d0f8e8af5983dfcbb276a"},{"name":"system_information.json","sha":"8745fd7bf29a62365d7b4624b7d0743242fc8296"},{"name":"system_pricing_plans.json","sha":"b6b4ba90d1304b52b434ef626fccea6e7c1ae331"},{"name":"system_regions.json","sha":"a3cb932737fd95bb02c7294d1eaca49b268e1cf7"},{"name":"vehicle_types.json","sha":"23c440bd713bf99f282bfb5e08f9d52c02eb66db"}]
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-json-schema/contents/v3.1 --jq `[.[]|{name,sha}]`
+{"message":"Not Found","documentation_url":"https://docs.github.com/rest/repos/contents#get-repository-content","status":"404"}
+[exit=1]
+
+> gh api repos/MobilityData/gbfs-json-schema/contents/testFixtures --jq `[.[]|{name,type}]`
+[{"name":"v2.3","type":"dir"},{"name":"v3.0","type":"dir"},{"name":"v3.1-RC3","type":"dir"}]
+[exit=0]
+
+> gh api repos/MobilityData/gbfs-validator/contents --jq `[.[]|{name,type}]`
+[{"name":".all-contributorsrc","type":"file"},{"name":".editorconfig","type":"file"},{"name":".eslintignore","type":"file"},{"name":".eslintrc.cjs","type":"file"},{"name":".github","type":"dir"},{"name":".gitignore","type":"file"},{"name":".gitmodules","type":"file"},{"name":".nvmrc","type":"file"},{"name":".prettierrc","type":"file"},{"name":"CODE_OF_CONDUCT.md","type":"file"},{"name":"CONTRIBUTING.md","type":"file"},{"name":"LICENSE.md","type":"file"},{"name":"README.md","type":"file"},{"name":"RULES.md","type":"file"},{"name":"check-systems","type":"dir"},{"name":"common","type":"dir"},{"name":"docs","type":"dir"},{"name":"functions","type":"dir"},{"name":"gbfs-validator","type":"dir"},{"name":"netlify.toml","type":"file"},{"name":"package.json","type":"file"},{"name":"renovate.json","type":"file"},{"name":"webpack.dev.config.js","type":"file"},{"name":"website","type":"dir"},{"name":"yarn.lock","type":"file"}]
+[exit=0]
+

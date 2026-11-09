@@ -1,0 +1,14 @@
+2026-11-09（Asia/Shanghai）标签解析证据。
+
+命令：gh api repos/MobilityData/gbfs/git/ref/tags/v2.3 --jq ".object.type + \" \" + .object.sha"
+结果：tag 2c323f7c3529980ebdc7b5ae2140754b7ceb93b0
+
+命令：gh api repos/MobilityData/gbfs/git/tags/2c323f7c3529980ebdc7b5ae2140754b7ceb93b0
+结果：tag v2.3 指向 commit 4f0cc7024ff5ba71d3c3e861c3ff23a281ef71f8。
+
+以 commit SHA 直接查询：
+- 根目录：.github、.gitignore、README.md、data-licenses.md、gbfs.md、governance.md、images、scripts、systems.csv。
+- gbfs.md blob SHA：9d5a63e45a241b2427a273523d3a1a908eeb0529，大小 104671 字节。
+- LICENSE 查询返回 HTTP 404；根目录和 Git tree 均没有 LICENSE。
+
+后续规范引用应使用 commit 4f0cc7024ff5ba71d3c3e861c3ff23a281ef71f8。2c323f7c3529980ebdc7b5ae2140754b7ceb93b0 仅是 annotated tag object SHA，不能写成规范 commit SHA。

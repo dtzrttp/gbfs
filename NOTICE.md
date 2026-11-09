@@ -1,5 +1,9 @@
 # 第三方材料
 
+- MobilityData 管理的 GBFS JSON Schema 仓库，提交 01d4cb480410ca234b1d76799daf474b8f839e85。原始 v2.3 Schema 13 份保存在 docs/evidence/2026-11-09/recheck/schema-v2.3/；后续正式支持资源位于 schemas/v2.3/。仓库 LICENSE 为 Apache-2.0；GitHub About 元数据对 Schema 内容另有 CC BY 4.0 声明。保留上游署名、来源 SHA 和两项许可说明。[v2.3 Schema](https://github.com/MobilityData/gbfs-json-schema/tree/01d4cb480410ca234b1d76799daf474b8f839e85/v2.3) · [LICENSE](https://github.com/MobilityData/gbfs-json-schema/blob/01d4cb480410ca234b1d76799daf474b8f839e85/LICENSE)
+- GBFS v2.3 规范 tag v2.3 指向 commit 4f0cc7024ff5ba71d3c3e861c3ff23a281ef71f8，没有 LICENSE 文件，README 记载版权归 NABSA。本项目只链接并用自己的话映射字段/规则，不复制该 tag 的规范正文或样例。[规范源码](https://github.com/MobilityData/gbfs/blob/4f0cc7024ff5ba71d3c3e861c3ff23a281ef71f8/gbfs.md)
+- 官方 Schema 仓库的 testFixtures/v2.3/ 没有核实到独立再分发许可证；不复制其中 feed 数据，测试使用项目自行构造的合成 fixtures。
+
 - MobilityData 管理的 GBFS JSON Schema 仓库，提交 `01d4cb480410ca234b1d76799daf474b8f839e85`。 `schemas/v3.0/` 内六份文件原样保存，许可证见 `schemas/LICENSE`。 `schema_sources.mbt` 是相同 Schema 的 MoonBit 字符串表示。 [上游文件](https://github.com/MobilityData/gbfs-json-schema/tree/01d4cb480410ca234b1d76799daf474b8f839e85/v3.0) · [Apache-2.0 许可](https://github.com/MobilityData/gbfs-json-schema/blob/01d4cb480410ca234b1d76799daf474b8f839e85/LICENSE)
 - GBFS 规范示例来自 MobilityData 及 GBFS 社区维护的 v3.0 文档，提交 `457cb71121348ad6c07384b7743ea7df994a4ebb`。 `tests/official/` 中的文件按原文提取 JSON 代码块，内容未修改。规范页面声明 CC BY 3.0。 [原文及许可声明](https://github.com/MobilityData/gbfs/blob/457cb71121348ad6c07384b7743ea7df994a4ebb/gbfs.md#license) · [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
 - 外部依赖使用 Mooncakes 版本 `moonbitstack/moonschema@0.2.4`、`moonbitstack/moonurl@0.2.3` 与 `moonbitlang/x@0.5.7`，许可证均为 Apache-2.0。依赖源码由 MoonBit 工具链解析。 [moonschema](https://mooncakes.io/docs/moonbitstack/moonschema@0.2.4) · [moonurl](https://mooncakes.io/docs/moonbitstack/moonurl@0.2.3) · [moonbitlang/x](https://mooncakes.io/docs/moonbitlang/x@0.5.7)

@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-09",
+  "source": "https://github.com/MobilityData/gbfs/blob/06dddf8d087df8f9c419953c2dc7ce73100e44d8/systems.csv",
+  "tag": "v3.1",
+  "commit": "06dddf8d087df8f9c419953c2dc7ce73100e44d8",
+  "csv_rows": 1277,
+  "counts": [
+    {
+      "version": "2.3",
+      "rows_listing_version": 698
+    },
+    {
+      "version": "3.0",
+      "rows_listing_version": 577
+    },
+    {
+      "version": "3.1",
+      "rows_listing_version": 0
+    }
+  ],
+  "top_supported_version_cells": [
+    {
+      "Name": "2.3",
+      "Count": 355
+    },
+    {
+      "Name": "3.0",
+      "Count": 284
+    },
+    {
+      "Name": "2.2",
+      "Count": 176
+    },
+    {
+      "Name": "2.3 ; 3.0",
+      "Count": 109
+    },
+    {
+      "Name": "1.0 ; 2.3 ; 3.0",
+      "Count": 96
+    },
+    {
+      "Name": "1.1 ; 2.3",
+      "Count": 83
+    },
+    {
+      "Name": "1.1 ; 2.3 ; 3.0",
+      "Count": 47
+    },
+    {
+      "Name": "2.2 ; 3.0",
+      "Count": 41
+    },
+    {
+      "Name": "1.1",
+      "Count": 30
+    },
+    {
+      "Name": "2.1 ; 2.2",
+      "Count": 24
+    },
+    {
+      "Name": "1.0",
+      "Count": 16
+    },
+    {
+      "Name": "1.1 ; 2.0 ; 2.1 ; 2.2 ; 2.3",
+      "Count": 4
+    }
+  ]
+}
