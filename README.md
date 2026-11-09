@@ -21,8 +21,8 @@ gbfs.mbt 用 MoonBit 校验共享单车和微出行系统的 **GBFS v2.3** 本�
 按照官方安装说明准备 MoonBit 工具链和 Node.js 24。开发验证使用 `moon 0.1.20261028`、`moonc v0.10.18+6c83a7f62` 和 Node.js `v24.19.0`。 [MoonBit 安装说明](https://docs.moonbitlang.com/en/latest/tutorial/tour.html#installation)
 
 ```sh
-git clone https://github.com/dtzrttp/gbfs.mbt.git
-cd gbfs.mbt
+git clone https://github.com/dtzrttp/gbfs.git
+cd gbfs
 moon update
 moon build --target js --deny-warn
 ```
