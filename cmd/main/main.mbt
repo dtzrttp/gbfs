@@ -239,6 +239,8 @@ fn check_inputs(
   inputs : Array[String],
   as_json : Bool,
   freshness : Bool,
+  docked : Bool,
+  free_floating : Bool,
 ) -> Int32 raise CliError {
   let paths = collect_paths(inputs)
   let feeds = Map([])
@@ -257,11 +259,13 @@ fn check_inputs(
     feeds[feed] = source
     path_by_feed[feed] = path
   }
-  let diagnostics = if freshness {
-    @gbfs.validate_snapshot_at(feeds, now_unix_seconds())
-  } else {
-    @gbfs.validate_snapshot(feeds)
-  }
+  let now = if freshness { Some(now_unix_seconds()) } else { None }
+  let diagnostics = @gbfs.validate_snapshot_with_options(
+    feeds,
+    docked~,
+    free_floating~,
+    now?,
+  )
   let with_paths = diagnostics.map(diagnostic => {
     let endpoint = if diagnostic.file.has_suffix(".json") {
       diagnostic.file[:diagnostic.file.length() - 5].to_owned()
@@ -283,8 +287,8 @@ fn check_inputs(
 ///|
 let usage : String =
   #|用法
-  #|  check <目录或 JSON 文件...> [--freshness] [--json] 校验 GBFS v2.3 的本地快照
-  #|  file <端点 JSON 文件> [--json] 仅校验该文件的官方 Schema
+  #|  check <目录或 JSON 文件...> [--docked] [--free-floating] [--freshness] [--json] 校验 GBFS v2.3 的本地快照
+  #|  file <端点 JSON 文件> [--json] 执行单文件校验
   #|  parse <目录或 JSON 文件...> [--json] 仅解析 JSON，不执行 Schema 校验
   #|  --help                                 显示用法
 
@@ -319,25 +323,28 @@ fn run(args : ArrayView[String]) -> Int32 raise CliError {
       diagnostics, as_json, "GBFS v2.3 单文件 Schema 校验完成",
     )
   } else if args.length() >= 2 && args[0] == "check" {
-    let as_json = args[args.length() - 1] == "--json"
-    let end_without_json = if as_json {
-      args.length() - 1
-    } else {
-      args.length()
+    let mut as_json = false
+    let mut freshness = false
+    let mut docked = false
+    let mut free_floating = false
+    let inputs = []
+    for i in 1..<args.length() {
+      let arg = args[i]
+      match arg {
+        "--json" => as_json = true
+        "--freshness" => freshness = true
+        "--docked" => docked = true
+        "--free-floating" => free_floating = true
+        _ if arg.has_prefix("--") => raise InputError("未知选项 " + arg)
+        _ => inputs.push(arg)
+      }
     }
-    let freshness = end_without_json > 1 &&
-      args[end_without_json - 1] == "--freshness"
-    let end = if freshness { end_without_json - 1 } else { end_without_json }
-    if end <= 1 {
+    if inputs.is_empty() {
       raise InputError(
         "check 需要至少一个目录或 JSON 文件路径\n" + usage,
       )
     }
-    let inputs = []
-    for i in 1..<end {
-      inputs.push(args[i])
-    }
-    check_inputs(inputs, as_json, freshness)
+    check_inputs(inputs, as_json, freshness, docked, free_floating)
   } else {
     match args {
       ["--help"] | ["-h"] => {

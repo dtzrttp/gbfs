@@ -42,3 +42,16 @@ test "check CLI 支持显式列出的端点文件" {
   }
   assert_eq(code, 0)
 }
+
+///|
+test "check 根据显式运营模式要求对应端点" {
+  let snapshot = "tests/fixtures/v2.3/snapshot"
+  let docked = run(["check", "--docked", snapshot][:]) catch {
+    InputError(_) => 2
+  }
+  let mixed = run(["check", "--free-floating", "--docked", snapshot][:]) catch {
+    InputError(_) => 2
+  }
+  assert_eq(docked, 0)
+  assert_eq(mixed, 1)
+}

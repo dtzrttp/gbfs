@@ -424,7 +424,10 @@ fn check_discovery(
 }
 
 ///|
-fn check_station_relations(documents : Map[String, Json]) -> Array[Diagnostic] {
+fn check_station_relations(
+  documents : Map[String, Json],
+  docked : Bool,
+) -> Array[Diagnostic] {
   let diagnostics = []
   let information_rows = snapshot_rows(
     documents, "station_information", "stations",
@@ -432,7 +435,8 @@ fn check_station_relations(documents : Map[String, Json]) -> Array[Diagnostic] {
   let status_rows = snapshot_rows(documents, "station_status", "stations")
   let information_ids = row_identifiers(information_rows, "station_id")
   let status_ids = row_identifiers(status_rows, "station_id")
-  if documents.contains("station_information") &&
+  if !docked &&
+    documents.contains("station_information") &&
     !documents.contains("station_status") {
     diagnostics.push(
       relation_diagnostic(
@@ -442,7 +446,8 @@ fn check_station_relations(documents : Map[String, Json]) -> Array[Diagnostic] {
       ),
     )
   }
-  if documents.contains("station_status") &&
+  if !docked &&
+    documents.contains("station_status") &&
     !documents.contains("station_information") {
     diagnostics.push(
       relation_diagnostic(
@@ -785,6 +790,7 @@ fn check_recommended_sums(documents : Map[String, Json]) -> Array[Diagnostic] {
 fn validate_consistency(
   documents : Map[String, Json],
   local_files : Array[String],
+  docked : Bool,
 ) -> Array[Diagnostic] {
   let diagnostics = []
   for diagnostic in check_discovery(documents, local_files) {
@@ -793,7 +799,7 @@ fn validate_consistency(
   for diagnostic in check_duplicate_definitions(documents) {
     diagnostics.push(diagnostic)
   }
-  for diagnostic in check_station_relations(documents) {
+  for diagnostic in check_station_relations(documents, docked) {
     diagnostics.push(diagnostic)
   }
   for diagnostic in check_vehicle_and_plan_relations(documents) {

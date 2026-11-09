@@ -32,6 +32,8 @@ pub fn validate_snapshot(Map[String, String]) -> Array[Diagnostic]
 
 pub fn validate_snapshot_at(Map[String, String], Double) -> Array[Diagnostic]
 
+pub fn validate_snapshot_with_options(Map[String, String], docked? : Bool, free_floating? : Bool, now? : Double) -> Array[Diagnostic]
+
 // Errors
 
 // Types and methods

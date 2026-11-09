@@ -9,6 +9,8 @@ fn validate_snapshot_with_limits(
   feeds : Map[String, String],
   max_total_bytes : Int32,
   now? : Double,
+  docked~ : Bool = false,
+  free_floating~ : Bool = false,
 ) -> Array[Diagnostic] {
   let mut total_bytes = 0
   let mut exceeds_limit = false
@@ -59,7 +61,12 @@ fn validate_snapshot_with_limits(
           }
         }
       None =>
-        if is_required_snapshot_feed(name) {
+        if is_required_snapshot_feed(name) ||
+          (
+            docked &&
+            (name == "station_information" || name == "station_status")
+          ) ||
+          (free_floating && name == "free_bike_status") {
           diagnostics.push(
             issue(
               name,
@@ -98,7 +105,7 @@ fn validate_snapshot_with_limits(
         local_files.push(name)
       }
     }
-    for diagnostic in validate_consistency(documents, local_files) {
+    for diagnostic in validate_consistency(documents, local_files, docked) {
       diagnostics.push(diagnostic)
     }
     for diagnostic in check_timing(documents, now) {
@@ -115,4 +122,21 @@ pub fn validate_snapshot_at(
   now : Double,
 ) -> Array[Diagnostic] {
   validate_snapshot_with_limits(feeds, max_snapshot_bytes(), now~)
+}
+
+///|
+/// 显式指定运营模式。可同时要求有桩和无桩端点。
+pub fn validate_snapshot_with_options(
+  feeds : Map[String, String],
+  docked~ : Bool = false,
+  free_floating~ : Bool = false,
+  now? : Double,
+) -> Array[Diagnostic] {
+  validate_snapshot_with_limits(
+    feeds,
+    max_snapshot_bytes(),
+    now?,
+    docked~,
+    free_floating~,
+  )
 }
