@@ -15,10 +15,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-      - uses: hustcer/setup-moonbit@87e2bdf5cf20d3b6f5c5f266a8a513f503bb5b76
-        with:
-          version: "0.10.18+6c83a7f62"
-          core-version: "0.10.18+6c83a7f62"
+      - name: 安装固定版本 MoonBit
+        env:
+          MOON_HOME: ${{ runner.temp }}/gbfs-moon
+        run: |
+          curl --fail --silent --show-error --location --retry 3 \
+            https://cli.moonbitlang.com/install/unix.sh -o "$RUNNER_TEMP/moonbit-install.sh"
+          bash "$RUNNER_TEMP/moonbit-install.sh" '0.10.18+6c83a7f62'
+          echo "$MOON_HOME/bin" >> "$GITHUB_PATH"
+          echo "MOON_HOME=$MOON_HOME" >> "$GITHUB_ENV"
       - run: moon version --all
       - run: moon update
       - run: moon fmt --check
