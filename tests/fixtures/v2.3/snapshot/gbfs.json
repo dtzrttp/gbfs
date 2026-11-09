@@ -1,1 +1,1 @@
-{"last_updated":1450155600,"ttl":0,"version":"2.3","data":{"en":{"feeds":[{"name":"system_information","url":"https://example.org/system_information"},{"name":"station_status","url":"https://example.org/station_status"}]}}}
+{"last_updated":1450155600,"ttl":0,"version":"2.3","data":{"en":{"feeds":[{"name":"system_information","url":"https://example.org/system_information"},{"name":"station_information","url":"https://example.org/station_information"},{"name":"station_status","url":"https://example.org/station_status"}]}}}

@@ -27,6 +27,7 @@ assert.deepEqual(directoryReport, {
 const explicitReport = JSON.parse(run(0, 'check',
   path.join(snapshot, 'gbfs.json'),
   path.join(snapshot, 'system_information.json'),
+  path.join(snapshot, 'station_information.json'),
   path.join(snapshot, 'station_status.json'), '--json').stdout);
 assert.deepEqual(explicitReport, directoryReport);
 

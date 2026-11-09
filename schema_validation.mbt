@@ -184,15 +184,53 @@ pub fn validate_file(feed : String, source : String) -> Array[Diagnostic] {
       ),
     ]
   }
-  let schema = schemas[feed]
   match parse_json_untrusted(feed + ".json", source) {
     Err(diagnostic) => [diagnostic]
-    Ok(document) => {
-      let value = untrusted_value(document)
-      limit_diagnostics(
-        schema.faults(value).map(fault => schema_issue(feed, value, fault)),
-        1000,
-      )
-    }
+    Ok(document) => validate_document_schema(feed, untrusted_value(document))
   }
+}
+
+///|
+fn validate_document_schema(feed : String, value : Json) -> Array[Diagnostic] {
+  let faults = schemas[feed].faults(value)
+  // v2.3 正文允许跨午夜服务时刻，官方 Schema 的小时模式只接受 00–23。
+  let applicable = faults.filter(fault => {
+    if feed != "system_hours" ||
+      fault.keyword != "pattern" ||
+      !(fault.at.has_suffix("/start_time") || fault.at.has_suffix("/end_time")) {
+      true
+    } else {
+      match value_at_pointer(value, fault.at) {
+        Some(String(time)) => !is_extended_service_time(time)
+        _ => true
+      }
+    }
+  })
+  limit_diagnostics(
+    applicable.map(fault => schema_issue(feed, value, fault)),
+    1000,
+  )
+}
+
+///|
+fn is_extended_service_time(time : String) -> Bool {
+  let chars = time.to_array()
+  if chars.length() != 8 || chars[2] != ':' || chars[5] != ':' {
+    return false
+  }
+  let hour = chars[0] >= '2' &&
+    chars[0] <= '4' &&
+    chars[1] >= '0' &&
+    chars[1] <= '9' &&
+    (chars[0] != '2' || chars[1] >= '4') &&
+    (chars[0] != '4' || chars[1] <= '7')
+  hour &&
+  chars[3] >= '0' &&
+  chars[3] <= '5' &&
+  chars[4] >= '0' &&
+  chars[4] <= '9' &&
+  chars[6] >= '0' &&
+  chars[6] <= '5' &&
+  chars[7] >= '0' &&
+  chars[7] <= '9'
 }

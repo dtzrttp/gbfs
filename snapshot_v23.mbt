@@ -1,5 +1,5 @@
 ///|
-/// 校验 v2.3 本地快照的文件输入与单文件 Schema。跨文件语义由 consistency 模块处理。
+/// 校验 v2.3 本地快照的 Schema 与跨文件关系。此入口不读取当前时间。
 pub fn validate_snapshot(feeds : Map[String, String]) -> Array[Diagnostic] {
   validate_snapshot_with_limits(feeds, max_snapshot_bytes())
 }
@@ -8,6 +8,7 @@ pub fn validate_snapshot(feeds : Map[String, String]) -> Array[Diagnostic] {
 fn validate_snapshot_with_limits(
   feeds : Map[String, String],
   max_total_bytes : Int32,
+  now? : Double,
 ) -> Array[Diagnostic] {
   let mut total_bytes = 0
   let mut exceeds_limit = false
@@ -34,11 +35,28 @@ fn validate_snapshot_with_limits(
     ]
   }
   let diagnostics = []
+  let documents : Map[String, Json] = Map([])
+  let mut all_supplied_files_valid = true
   for name in supported_feeds() {
     match feeds.get(name) {
       Some(source) =>
-        for diagnostic in validate_file(name, source) {
-          diagnostics.push(diagnostic)
+        match parse_json_untrusted(name + ".json", source) {
+          Err(diagnostic) => {
+            diagnostics.push(diagnostic)
+            all_supplied_files_valid = false
+          }
+          Ok(document) => {
+            let value = untrusted_value(document)
+            let file_diagnostics = validate_document_schema(name, value)
+            for diagnostic in file_diagnostics {
+              diagnostics.push(diagnostic)
+            }
+            if has_errors(file_diagnostics) {
+              all_supplied_files_valid = false
+            } else {
+              documents[name] = value
+            }
+          }
         }
       None =>
         if is_required_snapshot_feed(name) {
@@ -58,6 +76,7 @@ fn validate_snapshot_with_limits(
   }
   for name, _ in feeds {
     if !is_supported_feed(name) {
+      all_supplied_files_valid = false
       diagnostics.push(
         issue(
           name,
@@ -72,5 +91,28 @@ fn validate_snapshot_with_limits(
       )
     }
   }
+  if all_supplied_files_valid {
+    let local_files = []
+    for name, _ in feeds {
+      if is_supported_feed(name) {
+        local_files.push(name)
+      }
+    }
+    for diagnostic in validate_consistency(documents, local_files) {
+      diagnostics.push(diagnostic)
+    }
+    for diagnostic in check_timing(documents, now) {
+      diagnostics.push(diagnostic)
+    }
+  }
   limit_diagnostics(diagnostics, 5000)
+}
+
+///|
+/// 额外按调用者提供的 POSIX 秒时间检查快照的新鲜度。
+pub fn validate_snapshot_at(
+  feeds : Map[String, String],
+  now : Double,
+) -> Array[Diagnostic] {
+  validate_snapshot_with_limits(feeds, max_snapshot_bytes(), now~)
 }

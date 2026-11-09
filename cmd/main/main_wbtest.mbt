@@ -35,7 +35,7 @@ test "check CLI 支持显式列出的端点文件" {
   let code = run(
     [
       "check", "tests/fixtures/v2.3/snapshot/gbfs.json", "tests/fixtures/v2.3/snapshot/system_information.json",
-      "tests/fixtures/v2.3/snapshot/station_status.json",
+      "tests/fixtures/v2.3/snapshot/station_information.json", "tests/fixtures/v2.3/snapshot/station_status.json",
     ][:],
   ) catch {
     InputError(_) => 2

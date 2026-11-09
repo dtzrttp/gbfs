@@ -6,7 +6,7 @@ license = "Apache-2.0"
 
 readme = "README.md"
 
-description = "离线校验 GBFS 3.0 共享出行数据及跨端点引用"
+description = "离线校验 GBFS v2.3 共享出行数据及跨端点引用"
 
 preferred_target = "js"
 

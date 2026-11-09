@@ -12,6 +12,10 @@ extern "js" fn set_exit_code(code : Int32) -> Unit =
   #| (code) => { process.exitCode = code; }
 
 ///|
+extern "js" fn now_unix_seconds() -> Double =
+  #| () => Math.floor(Date.now() / 1000)
+
+///|
 fn read_document(path : String) -> String raise CliError {
   let content = try {
     guard @fs.is_file(path) else {
@@ -160,6 +164,7 @@ fn endpoint_from_path(path : String) -> String raise CliError {
 fn validation_report(
   diagnostics : Array[@gbfs.Diagnostic],
   as_json : Bool,
+  label : String,
 ) -> Int32 {
   let errors = diagnostics.filter(d => d.severity is Error).length()
   let warnings = diagnostics.filter(d => d.severity is Warning).length()
@@ -212,7 +217,8 @@ fn validation_report(
       }
     }
     println(
-      "GBFS v2.3 Schema 校验完成（跨文件关系规则仍在开发中）：" +
+      label +
+      "：" +
       errors.to_string() +
       " 个错误，" +
       warnings.to_string() +
@@ -229,7 +235,11 @@ fn validation_report(
 }
 
 ///|
-fn check_inputs(inputs : Array[String], as_json : Bool) -> Int32 raise CliError {
+fn check_inputs(
+  inputs : Array[String],
+  as_json : Bool,
+  freshness : Bool,
+) -> Int32 raise CliError {
   let paths = collect_paths(inputs)
   let feeds = Map([])
   let path_by_feed = Map([])
@@ -247,7 +257,11 @@ fn check_inputs(inputs : Array[String], as_json : Bool) -> Int32 raise CliError 
     feeds[feed] = source
     path_by_feed[feed] = path
   }
-  let diagnostics = @gbfs.validate_snapshot(feeds)
+  let diagnostics = if freshness {
+    @gbfs.validate_snapshot_at(feeds, now_unix_seconds())
+  } else {
+    @gbfs.validate_snapshot(feeds)
+  }
   let with_paths = diagnostics.map(diagnostic => {
     let endpoint = if diagnostic.file.has_suffix(".json") {
       diagnostic.file[:diagnostic.file.length() - 5].to_owned()
@@ -259,13 +273,18 @@ fn check_inputs(inputs : Array[String], as_json : Bool) -> Int32 raise CliError 
       None => diagnostic
     }
   })
-  validation_report(@gbfs.sort_diagnostics(with_paths), as_json)
+  validation_report(
+    @gbfs.sort_diagnostics(with_paths),
+    as_json,
+    "GBFS v2.3 快照校验完成",
+  )
 }
 
 ///|
 let usage : String =
   #|用法
-  #|  check <目录或 JSON 文件...> [--json] 校验 GBFS v2.3 的本地快照
+  #|  check <目录或 JSON 文件...> [--freshness] [--json] 校验 GBFS v2.3 的本地快照
+  #|  file <端点 JSON 文件> [--json] 仅校验该文件的官方 Schema
   #|  parse <目录或 JSON 文件...> [--json] 仅解析 JSON，不执行 Schema 校验
   #|  --help                                 显示用法
 
@@ -284,9 +303,31 @@ fn run(args : ArrayView[String]) -> Int32 raise CliError {
       inputs.push(args[i])
     }
     parse_inputs(inputs, as_json)
-  } else if args.length() >= 2 && args[0] == "check" {
+  } else if args.length() >= 2 && args[0] == "file" {
     let as_json = args[args.length() - 1] == "--json"
     let end = if as_json { args.length() - 1 } else { args.length() }
+    guard end == 2 else {
+      raise InputError("file 需要一个端点 JSON 文件路径")
+    }
+    let path = args[1]
+    let feed = endpoint_from_path(path)
+    let diagnostics = @gbfs.validate_file(feed, read_document(path)).map(diagnostic => {
+      ..diagnostic,
+      file: path,
+    })
+    validation_report(
+      diagnostics, as_json, "GBFS v2.3 单文件 Schema 校验完成",
+    )
+  } else if args.length() >= 2 && args[0] == "check" {
+    let as_json = args[args.length() - 1] == "--json"
+    let end_without_json = if as_json {
+      args.length() - 1
+    } else {
+      args.length()
+    }
+    let freshness = end_without_json > 1 &&
+      args[end_without_json - 1] == "--freshness"
+    let end = if freshness { end_without_json - 1 } else { end_without_json }
     if end <= 1 {
       raise InputError(
         "check 需要至少一个目录或 JSON 文件路径\n" + usage,
@@ -296,7 +337,7 @@ fn run(args : ArrayView[String]) -> Int32 raise CliError {
     for i in 1..<end {
       inputs.push(args[i])
     }
-    check_inputs(inputs, as_json)
+    check_inputs(inputs, as_json, freshness)
   } else {
     match args {
       ["--help"] | ["-h"] => {
