@@ -1,1 +1,1 @@
-{"last_updated":1450155600,"ttl":0,"version":"2.3","data":{"stations":[]}}
+{"last_updated":1450155600,"ttl":0,"version":"2.3","data":{"stations":[{"station_id":"s1","name":"示例站点","lat":31.23,"lon":121.47,"capacity":5}]}}
