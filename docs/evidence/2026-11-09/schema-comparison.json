@@ -1,0 +1,1829 @@
+{
+  "schemaCommit": "01d4cb480410ca234b1d76799daf474b8f839e85",
+  "engine": "Ajv 8.17.1 + ajv-formats 2.1.1",
+  "total": 95,
+  "agreements": 94,
+  "differences": [
+    "hours.spec_extended_time"
+  ],
+  "unexpected": [],
+  "results": [
+    {
+      "id": "valid.gbfs",
+      "feed": "gbfs",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.gbfs.last_updated",
+      "feed": "gbfs",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.gbfs.ttl",
+      "feed": "gbfs",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.gbfs.version",
+      "feed": "gbfs",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.gbfs.data",
+      "feed": "gbfs",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.gbfs_versions",
+      "feed": "gbfs_versions",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.gbfs_versions.last_updated",
+      "feed": "gbfs_versions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.gbfs_versions.ttl",
+      "feed": "gbfs_versions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.gbfs_versions.version",
+      "feed": "gbfs_versions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.gbfs_versions.data",
+      "feed": "gbfs_versions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.system_information",
+      "feed": "system_information",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.system_information.last_updated",
+      "feed": "system_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_information.ttl",
+      "feed": "system_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_information.version",
+      "feed": "system_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_information.data",
+      "feed": "system_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.station_information",
+      "feed": "station_information",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.station_information.last_updated",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.station_information.ttl",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.station_information.version",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.station_information.data",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.station_status",
+      "feed": "station_status",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.station_status.last_updated",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.station_status.ttl",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.station_status.version",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.station_status.data",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.free_bike_status",
+      "feed": "free_bike_status",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.free_bike_status.last_updated",
+      "feed": "free_bike_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.free_bike_status.ttl",
+      "feed": "free_bike_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.free_bike_status.version",
+      "feed": "free_bike_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.free_bike_status.data",
+      "feed": "free_bike_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.vehicle_types",
+      "feed": "vehicle_types",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.vehicle_types.last_updated",
+      "feed": "vehicle_types",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.vehicle_types.ttl",
+      "feed": "vehicle_types",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.vehicle_types.version",
+      "feed": "vehicle_types",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.vehicle_types.data",
+      "feed": "vehicle_types",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.system_hours",
+      "feed": "system_hours",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.system_hours.last_updated",
+      "feed": "system_hours",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_hours.ttl",
+      "feed": "system_hours",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_hours.version",
+      "feed": "system_hours",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_hours.data",
+      "feed": "system_hours",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.system_alerts",
+      "feed": "system_alerts",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.system_alerts.last_updated",
+      "feed": "system_alerts",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_alerts.ttl",
+      "feed": "system_alerts",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_alerts.version",
+      "feed": "system_alerts",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_alerts.data",
+      "feed": "system_alerts",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.system_calendar",
+      "feed": "system_calendar",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.system_calendar.last_updated",
+      "feed": "system_calendar",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_calendar.ttl",
+      "feed": "system_calendar",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_calendar.version",
+      "feed": "system_calendar",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_calendar.data",
+      "feed": "system_calendar",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.system_regions",
+      "feed": "system_regions",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.system_regions.last_updated",
+      "feed": "system_regions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_regions.ttl",
+      "feed": "system_regions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_regions.version",
+      "feed": "system_regions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_regions.data",
+      "feed": "system_regions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.system_pricing_plans",
+      "feed": "system_pricing_plans",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.system_pricing_plans.last_updated",
+      "feed": "system_pricing_plans",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_pricing_plans.ttl",
+      "feed": "system_pricing_plans",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_pricing_plans.version",
+      "feed": "system_pricing_plans",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.system_pricing_plans.data",
+      "feed": "system_pricing_plans",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "valid.geofencing_zones",
+      "feed": "geofencing_zones",
+      "expected": true,
+      "expectedMoonBit": true,
+      "reference": true,
+      "moonbit": true,
+      "referenceRules": [],
+      "moonbitRules": []
+    },
+    {
+      "id": "required.geofencing_zones.last_updated",
+      "feed": "geofencing_zones",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/last_updated",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.geofencing_zones.ttl",
+      "feed": "geofencing_zones",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/ttl",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.geofencing_zones.version",
+      "feed": "geofencing_zones",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/version",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "required.geofencing_zones.data",
+      "feed": "geofencing_zones",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "discovery.no_system",
+      "feed": "gbfs",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/en/feeds/0/name",
+          "const"
+        ],
+        [
+          "/data/en/feeds",
+          "contains"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/en/feeds",
+          "schema.contains"
+        ]
+      ]
+    },
+    {
+      "id": "discovery.bad_name",
+      "feed": "gbfs",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/en/feeds/0/name",
+          "const"
+        ],
+        [
+          "/data/en/feeds/1/name",
+          "const"
+        ],
+        [
+          "/data/en/feeds",
+          "contains"
+        ],
+        [
+          "/data/en/feeds/0/name",
+          "const"
+        ],
+        [
+          "/data/en/feeds/1/name",
+          "const"
+        ],
+        [
+          "/data/en/feeds",
+          "contains"
+        ],
+        [
+          "/data/en/feeds",
+          "anyOf"
+        ],
+        [
+          "/data/en/feeds/1/name",
+          "enum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/en/feeds",
+          "schema.anyOf"
+        ],
+        [
+          "/data/en/feeds/1/name",
+          "schema.enum"
+        ]
+      ]
+    },
+    {
+      "id": "discovery.bad_uri",
+      "feed": "gbfs",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/en/feeds/1/url",
+          "format"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/en/feeds/1/url",
+          "schema.format"
+        ]
+      ]
+    },
+    {
+      "id": "versions.bad_uri",
+      "feed": "gbfs_versions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/versions/0/url",
+          "format"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/versions/0/url",
+          "schema.format"
+        ]
+      ]
+    },
+    {
+      "id": "system.bad_email",
+      "feed": "system_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/email",
+          "format"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/email",
+          "schema.format"
+        ]
+      ]
+    },
+    {
+      "id": "system.bad_language",
+      "feed": "system_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/language",
+          "pattern"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/language",
+          "schema.pattern"
+        ]
+      ]
+    },
+    {
+      "id": "system.bad_timezone",
+      "feed": "system_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/timezone",
+          "enum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/timezone",
+          "schema.enum"
+        ]
+      ]
+    },
+    {
+      "id": "station.latitude",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0/lat",
+          "maximum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/lat",
+          "schema.maximum"
+        ]
+      ]
+    },
+    {
+      "id": "station.longitude",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0/lon",
+          "minimum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/lon",
+          "schema.minimum"
+        ]
+      ]
+    },
+    {
+      "id": "station.capacity",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0/capacity",
+          "minimum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/capacity",
+          "schema.minimum"
+        ]
+      ]
+    },
+    {
+      "id": "station.missing_id",
+      "feed": "station_information",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/station_id",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "status.negative_count",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0/num_bikes_available",
+          "minimum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/num_bikes_available",
+          "schema.minimum"
+        ]
+      ]
+    },
+    {
+      "id": "status.fractional_count",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0/num_docks_available",
+          "type"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/num_docks_available",
+          "schema.type"
+        ]
+      ]
+    },
+    {
+      "id": "status.boolean_type",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0/is_renting",
+          "type"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/is_renting",
+          "schema.type"
+        ]
+      ]
+    },
+    {
+      "id": "status.timestamp",
+      "feed": "station_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/stations/0/last_reported",
+          "minimum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/stations/0/last_reported",
+          "schema.minimum"
+        ]
+      ]
+    },
+    {
+      "id": "bike.missing_location",
+      "feed": "free_bike_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/bikes/0",
+          "required"
+        ],
+        [
+          "/data/bikes/0",
+          "required"
+        ],
+        [
+          "/data/bikes/0/lon",
+          "not"
+        ],
+        [
+          "/data/bikes/0",
+          "anyOf"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/bikes/0",
+          "schema.anyOf"
+        ]
+      ]
+    },
+    {
+      "id": "bike.fuel",
+      "feed": "free_bike_status",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/bikes/0/current_fuel_percent",
+          "maximum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/bikes/0/current_fuel_percent",
+          "schema.maximum"
+        ]
+      ]
+    },
+    {
+      "id": "vehicle.bad_form",
+      "feed": "vehicle_types",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/vehicle_types/0/form_factor",
+          "enum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/vehicle_types/0/form_factor",
+          "schema.enum"
+        ]
+      ]
+    },
+    {
+      "id": "vehicle.bad_propulsion",
+      "feed": "vehicle_types",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/vehicle_types/0/propulsion_type",
+          "enum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/vehicle_types/0/propulsion_type",
+          "schema.enum"
+        ]
+      ]
+    },
+    {
+      "id": "vehicle.motor_requires_range",
+      "feed": "vehicle_types",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/vehicle_types/0",
+          "required"
+        ],
+        [
+          "/data/vehicle_types/0",
+          "if"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/vehicle_types/0/max_range_meters",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "hours.bad_day",
+      "feed": "system_hours",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/rental_hours/0/days/0",
+          "enum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/rental_hours/0/days/0",
+          "schema.enum"
+        ]
+      ]
+    },
+    {
+      "id": "hours.bad_time",
+      "feed": "system_hours",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/rental_hours/0/end_time",
+          "pattern"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/rental_hours/0/end_time",
+          "schema.pattern"
+        ]
+      ]
+    },
+    {
+      "id": "hours.spec_extended_time",
+      "feed": "system_hours",
+      "expected": false,
+      "expectedMoonBit": true,
+      "reference": false,
+      "moonbit": true,
+      "referenceRules": [
+        [
+          "/data/rental_hours/0/end_time",
+          "pattern"
+        ]
+      ],
+      "moonbitRules": []
+    },
+    {
+      "id": "alerts.bad_enum",
+      "feed": "system_alerts",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/alerts/0/type",
+          "enum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/alerts/0/type",
+          "schema.enum"
+        ]
+      ]
+    },
+    {
+      "id": "calendar.bad_month",
+      "feed": "system_calendar",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/calendars/0/end_month",
+          "maximum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/calendars/0/end_month",
+          "schema.maximum"
+        ]
+      ]
+    },
+    {
+      "id": "calendar.bad_day",
+      "feed": "system_calendar",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/calendars/0/start_day",
+          "minimum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/calendars/0/start_day",
+          "schema.minimum"
+        ]
+      ]
+    },
+    {
+      "id": "regions.missing_name",
+      "feed": "system_regions",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/regions/0",
+          "required"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/regions/0/name",
+          "schema.required"
+        ]
+      ]
+    },
+    {
+      "id": "pricing.negative_price",
+      "feed": "system_pricing_plans",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/plans/0/price",
+          "minimum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/plans/0/price",
+          "schema.minimum"
+        ]
+      ]
+    },
+    {
+      "id": "pricing.bad_currency",
+      "feed": "system_pricing_plans",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/plans/0/currency",
+          "pattern"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/plans/0/currency",
+          "schema.pattern"
+        ]
+      ]
+    },
+    {
+      "id": "geo.bad_type",
+      "feed": "geofencing_zones",
+      "expected": false,
+      "expectedMoonBit": false,
+      "reference": false,
+      "moonbit": false,
+      "referenceRules": [
+        [
+          "/data/geofencing_zones/type",
+          "enum"
+        ]
+      ],
+      "moonbitRules": [
+        [
+          "/data/geofencing_zones/type",
+          "schema.enum"
+        ]
+      ]
+    }
+  ]
+}
