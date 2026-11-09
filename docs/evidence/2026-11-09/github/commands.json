@@ -1,0 +1,74 @@
+[
+  {
+    "id": "01-repo",
+    "endpoint": "search/repositories",
+    "query": "gbfs moonbit in:name,description,readme is:public",
+    "exit": 0,
+    "total": 1,
+    "incomplete": false
+  },
+  {
+    "id": "02-repo",
+    "endpoint": "search/repositories",
+    "query": "bikeshare moonbit in:name,description,readme is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  },
+  {
+    "id": "03-repo",
+    "endpoint": "search/repositories",
+    "query": "\"general bikeshare feed specification\" moonbit in:name,description,readme is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  },
+  {
+    "id": "04-repo",
+    "endpoint": "search/repositories",
+    "query": "gbfs language:MoonBit is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  },
+  {
+    "id": "05-repo",
+    "endpoint": "search/repositories",
+    "query": "\"bike share\" moonbit in:name,description,readme is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  },
+  {
+    "id": "06-code",
+    "endpoint": "search/code",
+    "query": "gbfs extension:mbt is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  },
+  {
+    "id": "07-code",
+    "endpoint": "search/code",
+    "query": "bikeshare extension:mbt is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  },
+  {
+    "id": "08-code",
+    "endpoint": "search/code",
+    "query": "\"station_information\" extension:mbt is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  },
+  {
+    "id": "09-code",
+    "endpoint": "search/code",
+    "query": "\"vehicle_status\" extension:mbt is:public",
+    "exit": 0,
+    "total": 0,
+    "incomplete": false
+  }
+]

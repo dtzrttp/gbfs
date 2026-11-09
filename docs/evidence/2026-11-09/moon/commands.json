@@ -1,0 +1,51 @@
+[
+  {
+    "command": "moon search \"gbfs\"",
+    "exit": 0,
+    "stdout": "01-gbfs.stdout.txt",
+    "stderr": "01-gbfs.stderr.txt",
+    "result": "1 module found"
+  },
+  {
+    "command": "moon search \"bikeshare\"",
+    "exit": 0,
+    "stdout": "02-bikeshare.stdout.txt",
+    "stderr": "02-bikeshare.stderr.txt",
+    "result": "No modules found."
+  },
+  {
+    "command": "moon search \"general bikeshare feed specification\"",
+    "exit": 0,
+    "stdout": "03-general-bikeshare-feed-specification.stdout.txt",
+    "stderr": "03-general-bikeshare-feed-specification.stderr.txt",
+    "result": "No modules found."
+  },
+  {
+    "command": "moon search \"bike share\"",
+    "exit": 0,
+    "stdout": "04-bike-share.stdout.txt",
+    "stderr": "04-bike-share.stderr.txt",
+    "result": "1 module found"
+  },
+  {
+    "command": "moon search \"gbfs validator\"",
+    "exit": 0,
+    "stdout": "05-gbfs-validator.stdout.txt",
+    "stderr": "05-gbfs-validator.stderr.txt",
+    "result": "1 module found"
+  },
+  {
+    "command": "moon search \"vehicle_status\"",
+    "exit": 0,
+    "stdout": "06-vehicle-status.stdout.txt",
+    "stderr": "06-vehicle-status.stderr.txt",
+    "result": "3 modules found"
+  },
+  {
+    "command": "moon search \"json schema\"",
+    "exit": 0,
+    "stdout": "07-json-schema.stdout.txt",
+    "stderr": "07-json-schema.stderr.txt",
+    "result": "20 modules found"
+  }
+]

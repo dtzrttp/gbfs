@@ -1,0 +1,49 @@
+GBFS 3.0 本地验收记录（2026-11-09，北京时间）
+=== moon version --all ===
+moon 0.1.20261028 (e1e1f15 2026-10-28) ~\.moon\bin\moon.exe
+moonc v0.10.18+6c83a7f62 (2026-10-28) \\?\<用户目录>\.moon\bin\moonc.exe
+moonrun 0.1.20261028 (e1e1f15 2026-10-28) \\?\<用户目录>\.moon\bin\moonrun.exe
+
+Feature flags enabled: rr_moon_mod,rr_moon_pkg
+退出码 0
+=== node --version ===
+v24.19.0
+退出码 0
+=== moon fmt --check ===
+Finished. moon: ran 1 task, now up to date
+退出码 0
+=== moon check --target js --deny-warn ===
+Finished. moon: ran 19 tasks, now up to date
+退出码 0
+=== moon test --target js --deny-warn ===
+Total tests: 9, passed: 9, failed: 0.
+退出码 0
+=== moon info --target js ===
+Finished. moon: ran 17 tasks, now up to date
+退出码 0
+=== moon build --target js --deny-warn ===
+Artifacts:
+Finished. moon: ran 18 tasks, now up to date
+  dtzrttp/gbfs/cmd/main  js  <项目目录>\_build\js\debug\build\cmd\main\main.js
+退出码 0
+=== node tools/embed-schemas.cjs --check ===
+退出码 0
+=== node tools/verify-cli.cjs ===
+规范示例 gbfs-1.json 退出码 1
+规范示例 station_information-1.json 退出码 0
+规范示例 station_information-2.json 退出码 0
+规范示例 station_status-1.json 退出码 0
+规范示例 system_information-1.json 退出码 0
+规范示例 vehicle_status-1.json 退出码 0
+规范示例 vehicle_status-2.json 退出码 0
+规范示例 vehicle_types-1.json 退出码 0
+CLI 回归通过。8 个原始示例，7 个接受、1 个按固定 Schema 预期拒绝。退出码 0、1、2 均已覆盖。
+退出码 0
+=== moon run cmd/main --target js -- check examples/valid --json ===
+{
+  "version": "3.0",
+  "errors": 0,
+  "warnings": 0,
+  "diagnostics": []
+}
+退出码 0

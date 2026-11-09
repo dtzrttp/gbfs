@@ -1,0 +1,218 @@
+20 modules found
+
+YumeCross/schema@0.4.3 (52 downloads)
+  Json Schema validation for MoonBit.
+  Repository: https://github.com/YumeXi/schema
+
+colmugx/json-schema@0.1.5 (6955 downloads)
+  Compile-once JSON Schema 2020-12 validator for MoonBit: exact decimal arithmetic, precise pattern semantics, no silent schema errors, no hidden I/O.
+
+  colmugx/json-schema
+    colmugx/json-schema provides a compile-once JSON Schema validator for MoonBit, supporting precise 2020-12 validation scenarios like static and dynamic references. Users can create a Schema instance via Schema::compile to then validate Json objects using Schema.valid or Schema.fault.
+
+moonbitstack/moonschema@0.2.4 (2337 downloads)
+  JSON Schema validation for MoonBit, draft-04 through v1: four output formats, nineteen format names, and vocabularies from outside.
+  Repository: https://github.com/moonbitstack/moonschema
+
+  moonbitstack/moonschema
+    The moonbitstack/moonschema package provides JSON Schema validation for MoonBit. It allows reading a schema, validating an instance against it, and retrieving validation results in several defined formats via Schema::report. Important API functions include Schema::new for loading a schema and Schema::valid for a simple boolean check.
+
+  moonbitstack/moonschema/examples/web
+    This module provides a function called `check` to validate a JSON `instance` against a JSON `schema` using a specified `draft` version. It returns a JSON document detailing the validation status, side, draft, validity, faults, and any errors encountered.
+
+bobzhang/typify@0.2.1 (93 downloads)
+  Generate Rust and MoonBit types from JSON Schema (port of oxidecomputer/typify)
+  Repository: https://github.com/bobzhang/typify.mbt
+
+  bobzhang/typify/schema
+    Provides JSON Schema data types and decoders for MoonBit, including RootSchema, Schema, SchemaObject, and validation groups for numbers, strings, arrays, objects, and subschemas. Public functions parse schemas from JSON strings or serde_json values, serialize schemas back to JSON, and report decoding failures with a SchemaError carrying a message and JSON po
+
+  bobzhang/typify
+    typify generates Rust and MoonBit types from JSON Schema, porting oxidecomputer/typify to MoonBit. It provides a TypeSpace API for adding schemas and settings, plus the TypifyError error type for type generation failures.
+
+  bobzhang/typify/examples/evolution/v1
+    The bobzhang/typify/examples/evolution/v1 package provides generated example types illustrating schema evolution cases, including added or removed optional and required fields, renamed fields, changed defaults, closed and open enums, fixed-length arrays, and extra-field preservation. Each type supports JSON deserialization via from_json and from_json_str and
+
+  bobzhang/typify/examples/evolution/v2
+    Example package bobzhang/typify/examples/evolution/v2 that demonstrates schema evolution scenarios through public struct and enum types such as AddOptional, AddRequired, RemoveOptional, Rename, ChangeDefault, Widen, Tighten, ClosedEnum, OpenEnum, and Preserve. Each type supports JSON serialization and deserialization via serialize, to_json_string, from_json,
+
+  bobzhang/typify/regex
+    Provides compiled ECMAScript regular expressions with the semantics of the Rust regress crate under default flags, as used by typify for JSON Schema pattern. The Regex type supports compiling a pattern, checking whether text contains a match, finding the leftmost match with UTF-16 start and end offsets, and retrieving the original pattern string; RegexError
+
+Xu107-hhh/moonbit-jsonschema@0.1.0 (52 downloads)
+  A standards-compliant JSON Schema (2020-12) validator for MoonBit, with precise error paths and full error collection.
+  Repository: https://github.com/Xu107-hhh/moonbit-jsonschema
+
+  Xu107-hhh/moonbit-jsonschema
+    A standards-compliant JSON Schema (2020-12) validator for MoonBit that reads JSON Schema documents and validates JSON instances, returning all errors with exact instance and schema paths as JSON Pointers (RFC 6901). Supports multi-file schemas via explicit document registration and covers all major keywords (type, enum, allOf/anyOf/oneOf, $ref, $dynamicRef,
+
+  Xu107-hhh/moonbit-jsonschema/suite/gen
+    This package provides no public API; it is likely a placeholder or internal module within the moonbit-jsonschema suite.
+
+  Xu107-hhh/moonbit-jsonschema/cmd/main
+    This package is a command-line tool entry point with no public API documentation.
+
+QuietlyChan/moonschema@0.1.0 (37 downloads)
+  JSON Schema 2020-12 validator with a zod-style builder API for MoonBit — one engine, two frontends (ajv / zod), WASM-first.
+  Repository: https://github.com/QuietlyChan/moonschema
+
+  QuietlyChan/moonschema/schema
+    The package provides a JSON Schema validator for MoonBit, supporting JSON Schema 2020-12. It compiles schemas into reusable validators, checks instances, and returns detailed ValidationError arrays with localized messages (EN or ZH).
+
+  QuietlyChan/moonschema
+    moonschema is a pure MoonBit JSON Schema 2020-12 validation engine with two APIs: ajv-style compile(parse(schema)) for reusable schema validators, and a zod-style flow builder for inline modeling. It reports structured ValidationError values with instance_path and schema_path, supports cross-field x-rules expressions, error message locales, and compiles to W
+
+  QuietlyChan/moonschema/builder
+    QuietlyChan/moonschema/builder provides a zod-style fluent SchemaBuilder for constructing JSON schemas in MoonBit, with type constructors such as object, array, string, number, integer, boolean, enum_, literal, and any. Builders support constraints and formats, and can be compiled into a moonschema validator with locale support or converted to a standard JSO
+
+  QuietlyChan/moonschema/playground
+    This playground package provides browser-oriented APIs for JSON Schema compilation and validation in MoonBit. Use it to compile schemas to handles for repeated checks, or call validate_json for a single-shot parse-compile-validate workflow that returns structured JSON results.
+
+  QuietlyChan/moonschema/rules
+    Provides a DSL for cross-field validation rules in JSON Schema (x-rules). Compiles expression strings into an AST and evaluates them against JSON instances, supporting arithmetic, comparison, logical operators, and path references. Useful for validating dependent fields like end_date > start_date.
+
+Betterlol/moon_zod@0.10.0 (236 downloads)
+  A runtime JSON schema validation library for MoonBit, inspired by Zod and Pydantic
+  Repository: https://github.com/Betterlol/moon_zod
+
+  Betterlol/moon_zod/examples/schema2json
+    The schema2json example demonstrates the ability to convert Zod Schemas into JSON Schemas, which can be used with the MoonBit CLI for direct schema inspection or validation.
+
+  Betterlol/moon_zod/examples/multiple_schemas
+    This example demonstrates how to use multiple nested Schemas within a project using moon zod. It showcases the support for exporting both 'named' and full prompts, as well as 'named' and 'inline' json schema capabilities.
+
+  Betterlol/moon_zod/core
+    Provides JSON schema construction and validation for MoonBit, including primitive, object, array, tuple, enum, union, intersection, literal, recursive, and discriminated-union schemas. Schemas support parsing with structured validation errors and paths, error message overrides, transforms, preprocessing, defaults and prefaults, object modes, streaming JSON p
+
+  Betterlol/moon_zod/importers
+    The Betterlol/moon_zod/importers package provides runtime conversion from a JSON Schema (draft-07) document into a moon_zod @core.Schema object. It handles complex features like $defs, $ref, enums, and various type constraints to create parsable schema objects.
+
+  Betterlol/moon_zod
+    moon_zod provides a runtime JSON Schema intermediate representation for validating JSON values with a fluent, chainable API. It offers primitive and compound schemas, object modes and composition, error collection with field paths, LLM prompt generation, JSON Schema export and reverse import, MoonBit struct generation, and streaming JSON validation.
+  Showing 5 of 12 matching packages.
+
+moonrockz/smithy-jsonschema@0.10.0 (171 downloads)
+  Convert assembled Smithy models to JSON Schema
+  Repository: https://github.com/moonrockz/smithy
+
+  moonrockz/smithy-jsonschema
+    Converts an assembled Smithy model into a JSON Schema document via convert, and provides SchemaIndex for protocol converters to prepare a conversion context once and obtain whole documents, individual shapes, members, or filtered structures. SchemaIndex::for_values and convert_values support value-contract semantics for protocol exporters, with behavior cont
+
+FidollarinLA/moonmask@0.1.0 (37 downloads)
+  Constrained decoding for LLMs in MoonBit: compile JSON Schema and regex to byte-level DFAs and mask invalid tokens.
+  Repository: https://github.com/FidollarinLA/moonmask
+
+  FidollarinLA/moonmask/schema
+    The FidollarinLA/moonmask/schema package compiles a supported JSON schema subset into a regular expression or a byte-level DFA. It exposes compile and to_regex functions with an optional whitespace policy, and reports failures through the SchemaError type.
+
+Tino-hue/projdesk-kernel@0.3.0 (57 downloads)
+  ProjDesk MoonBit kernel — six independent algorithm engines (DSL compiler, constraint solver, migration, equivalence, round-trip, schema solvability) over one model description, projected to seven targets
+  Repository: https://github.com/Tino-hue/projdesk
+
+  Tino-hue/projdesk-kernel/main
+    The projdesk-kernel main package supplies a DSL lexer, parser, printer, and AST for model definitions, converts models to and from JSON Schema, and projects models to JSON Schema, OpenAPI, SQL, GraphQL, TypeScript, Zod, and Prisma targets. It also provides constraint analysis, interval propagation, model diffing and SQL migration generation, round-trip verif
+
+cosgammmmma/moonschema@0.1.1 (32 downloads)
+  Schema validation and data modeling library for MoonBit — declarative type definitions, constraint validation, and JSON Schema interoperability
+  Repository: https://github.com/cosgammmmma/moonschema
+
+  cosgammmmma/moonschema
+    MoonSchema is a schema validation and data modeling library for MoonBit that offers declarative type definitions (string, number, integer, boolean, null, array, object, any), rich constraints (min/max length, pattern, numeric bounds, enum, format), and structured validation error reporting with JSON Pointer paths. It provides a fluent builder API, a validate
+
+moonbitstack/moonmodel@0.1.3 (786 downloads)
+  One model description for MoonBit, projected to JSON Schema, OpenAPI, SQL and GraphQL.
+  Repository: https://github.com/moonbitstack/moonmodel
+
+  moonbitstack/moonmodel/json
+    Converts moonmodel Model values into JSON Schema. It can render a single model as a schema object, with optional Ref prefix, draft, and title, or produce a whole document placing the model and every model it mentions under $defs, leaving missing referenced models as dangling $ref.
+
+  moonbitstack/moonmodel/verify
+    Provides verification of JSON instances against a moonbitstack/moonmodel Model by publishing it as JSON Schema 2020-12 and checking instances with a schema-aware reader. Exposes schema to obtain the Schema, valid to test conformance, and faults to list every place and keyword where an instance does not conform; Refused reports a missing referenced model or a
+
+  moonbitstack/moonmodel/open
+    Converts moonbitstack/moonmodel Model values into OpenAPI Schema Object JSON. It supports Swagger 2.0, OpenAPI 3.0, and OpenAPI 3.1 dialects via the Dialect enum, can emit a single model or all reachable schemas under the dialect's schema key, and can use the model as a title.
+
+  moonbitstack/moonmodel
+    moonmodel lets you describe a data field or model once, then projects that single description into JSON Schema, OpenAPI, SQL, and GraphQL SDL. It provides Model, Field, Check, Type, Layout, and Order types, derives descriptions from #model annotations slash cmd/derive, and supports validation and byte-layout descriptions.
+
+moonbitstack/moonapi@0.17.9 (703 downloads)
+  A typed web framework for MoonBit.
+  Repository: https://github.com/moonbitstack/moonapi
+
+  moonbitstack/moonapi/examples/19-json-schema
+    No documentation was supplied for the moonbitstack/moonapi/examples/19-json-schema package beyond its name and an empty public API listing, so its purpose and use cases cannot be determined from the provided sources.
+
+  moonbitstack/moonapi/schema
+    Provides JSON-Schema descriptors for MoonBit: a Schema tree describes request and response bodies and is used both to emit OpenAPI/Swagger documents and to validate inbound JSON. Includes Pydantic/FastAPI-style constraints, fields, object schemas, 422 validation error bodies, response filtering, and conversion from moonmodel models.
+
+  moonbitstack/moonapi/examples/04-descriptors
+    Example package for MoonAPI that defines three data types used in an OpenAPI-style descriptor: User and Address for a nested response schema with $ref chaining, and NewUser as the request body of POST /users with an optional age field.
+
+  moonbitstack/moonapi/examples/08-response-model
+    Example response model for the moonbitstack/moonapi package. It defines Address and User types that derive @moonbitlang/core/json.ToJson, where User::schema() provides a descriptor and a ToSchema bridge lets schema_of(user) reach the same schema tree from a value.
+
+  moonbitstack/moonapi/security
+    Provides security primitives for MoonBit web APIs, mirroring FastAPI's security utilities. It offers API key, HTTP Basic, HTTP Digest, OAuth2 password and authorization-code bearer schemes, JWT HS256 token creation and bearer verification, scope enforcement, authenticated-user injection, and OpenAPI 2.0/3.x security scheme JSON.
+
+moonbitstack/moonmuse@0.1.0 (10 downloads)
+  Talk to language models from MoonBit: one contract for chat, streaming, tools and embeddings, with a subpackage per wire format.
+  Repository: https://github.com/moonbitstack/moonmuse
+
+  moonbitstack/moonmuse/structured
+    The moonbitstack/moonmuse/structured package provides functions for structured data interaction with LLMs. It includes 'ask' to repeatedly query until the response conforms to a schema and decoding succeeds, and 'extract_object' to pull the first balanced JSON object from text.
+
+mizchi/jsonschema@0.8.1 (5322 downloads)
+  JSON Schema validator and code generator for MoonBit
+  Repository: https://github.com/mizchi/moonbit-jsonschema
+
+  mizchi/jsonschema
+    mizchi/jsonschema parses raw JSON Schema documents to build validators and provides a zod-like Builder for constructing schemas programmatically. It validates JSON values against schemas such as string, number, integer, boolean, array, object, anyOf, allOf, oneOf, $ref, enum, and const, returning structured ValidationError results.
+
+  mizchi/jsonschema/codegen
+    Provides a function to generate code from a JSON schema given as a Json value, with specified entrypoints as JSON pointers. Supports optional root name, include references, and prefix.
+
+bobzhang/jsonschema@0.1.2 (59 downloads)
+  A faithful MoonBit port of python-jsonschema: JSON Schema validation.
+  Repository: https://github.com/bobzhang/jsonkit.mbt
+
+  bobzhang/jsonschema
+    A MoonBit port of python-jsonschema for validating JSON instances against JSON Schema drafts 3, 4, 6, 7, 2019-09 and 2020-12. It provides draft validator classes, lazy error sequences, best-match selection, error trees and paths, format and type checkers, Python-compatible JSON loading, and extensible validator classes via create and extend_with.
+
+  bobzhang/jsonschema/specifications
+    The bobzhang/jsonschema/specifications package provides access to built-in JSON schemas. It allows retrieval of schema contents via a URI or lists all shipped schemas as tuples of their ID and contents.
+
+  bobzhang/jsonschema/suite
+    The bobzhang/jsonschema/suite package provides no documented public API types, traits, errors, values, or miscellaneous features.
+
+bobzhang/referencing@0.1.2 (68 downloads)
+  A faithful MoonBit port of python-jsonschema/referencing: cross-specification JSON referencing.
+  Repository: https://github.com/bobzhang/jsonkit.mbt
+
+  bobzhang/referencing
+    A MoonBit port of python-jsonschema/referencing providing cross-specification JSON reference resolution. It supplies Specification, Resource, Registry, Resolver and Anchor types for resolving $ref, $dynamicRef and $recursiveRef, plus JSON Schema draft specifications, registries with retrieval callbacks and caching, and URL parsing helpers.
+
+  bobzhang/referencing/jsonschema
+    This module provides functions for handling JSON Schema referencing across various drafts, including creating anchors for 2019 and 2020, and determining `$id` values. It also includes functions to retrieve specific specifications by dialect ID and manage registry state.
+
+sgy1023-crt/MoonCheck@0.2.0 (39 downloads)
+  Batch / CI JSON Schema validation CLI with schema linting and JSON reports, built on mizchi/jsonschema.
+  Repository: https://github.com/sgy1023-crt/MoonCheck
+
+  sgy1023-crt/MoonCheck
+    MoonCheck is a batch and CI command line front end for JSON Schema validation in MoonBit, built on mizchi/jsonschema. It provides a CLI that validates many documents in one run, a machine-readable JSON report, stable exit codes and error kinds, and a schema linter that rejects typos; it also exposes a library API for validating, linting, and rendering report
+
+BigSaltyMan/moonjson-toolkit@0.3.1 (75 downloads)
+  A JSON toolkit for MoonBit: format, validate, diagnose, analyse and visualise JSON documents.
+  Repository: https://github.com/BigSaltyMan/moonjson-toolkit
+
+  BigSaltyMan/moonjson-toolkit
+    MoonJSON Toolkit is a MoonBit JSON toolkit and command-line tool for formatting, validating, diagnosing, analysing and reshaping JSON documents. It also supports JSON Lines, JSON Schema Draft 2020-12 subset checking, MoonBit type generation, MoonBit dependency tree analysis, AI quality review, statistics output and a Rabbita dashboard, with public APIs for p
+
+moonrockz/smithy-openrpc@0.10.0 (98 downloads)
+  Convert Smithy JSON-RPC services to OpenRPC
+  Repository: https://github.com/moonrockz/smithy
+
+  moonrockz/smithy-openrpc
+    Converts an assembled JSON-RPC 2.0 Smithy service into an OpenRPC 1.3.2 document using JSON Schema draft-07. It exposes validated conversion through convert and convert_result, with Config for service, version, protocol, naming, timestamp and extension policies, plus structured errors and shape-linked conversion warnings.
+
+Run `moon add <module>@<version>` to add a dependency.

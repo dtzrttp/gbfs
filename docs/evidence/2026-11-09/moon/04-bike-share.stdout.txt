@@ -1,0 +1,7 @@
+1 module found
+
+bobzhang/games@0.9.33 (1391 downloads)
+  —
+  Repository: https://github.com/bobzhang/games
+
+Run `moon add <module>@<version>` to add a dependency.

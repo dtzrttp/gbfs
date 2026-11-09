@@ -1,0 +1,15 @@
+3 modules found
+
+bobzhang/games@0.9.33 (1391 downloads)
+  —
+  Repository: https://github.com/bobzhang/games
+
+moonbit-community/dummy@0.0.1 (21 downloads)
+  —
+  Repository: https://github.com/moonbit-community/dummy.mbt
+
+Milky2018/moon_rapier@0.5.2 (16396 downloads)
+  A Physics library in MoonBit.
+  Repository: https://github.com/moonbit-community/moon_rapier
+
+Run `moon add <module>@<version>` to add a dependency.

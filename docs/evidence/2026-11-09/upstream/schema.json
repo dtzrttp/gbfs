@@ -1,0 +1,21 @@
+{
+  "repo": "MobilityData/gbfs-json-schema",
+  "sha": "01d4cb480410ca234b1d76799daf474b8f839e85",
+  "license": "Apache-2.0",
+  "truncated": false,
+  "paths": [
+    "LICENSE",
+    "v3.0/gbfs.json",
+    "v3.0/gbfs_versions.json",
+    "v3.0/geofencing_zones.json",
+    "v3.0/manifest.json",
+    "v3.0/station_information.json",
+    "v3.0/station_status.json",
+    "v3.0/system_alerts.json",
+    "v3.0/system_information.json",
+    "v3.0/system_pricing_plans.json",
+    "v3.0/system_regions.json",
+    "v3.0/vehicle_status.json",
+    "v3.0/vehicle_types.json"
+  ]
+}

@@ -1,0 +1,10 @@
+1 module found
+
+sa2360/pddl@0.2.0 (43 downloads)
+  A PDDL 2.1 Level 1 (classical + numeric fluents) planning engine and independent plan validator for MoonBit.
+  Repository: https://github.com/sa2360/pddl
+
+  sa2360/pddl
+    moonpddl is a MoonBit PDDL planning engine and standalone plan validator supporting PDDL 2.1 Level 1 with numeric fluents. It parses domain and problem files, grounds them into a state-space task, searches with heuristics such as hmax, hadd, and hff under GBFS, A*, or weighted A*, and independently replays plans to check applicability, goals, and cost.
+
+Run `moon add <module>@<version>` to add a dependency.
