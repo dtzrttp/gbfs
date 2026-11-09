@@ -1,0 +1,16 @@
+{
+  "version": "3.0",
+  "last_updated": "2026-11-09T08:00:00Z",
+  "ttl": 30,
+  "data": {
+    "vehicles": [
+      {
+        "vehicle_id": "v1",
+        "station_id": "s1",
+        "vehicle_type_id": "bike",
+        "is_reserved": false,
+        "is_disabled": false
+      }
+    ]
+  }
+}

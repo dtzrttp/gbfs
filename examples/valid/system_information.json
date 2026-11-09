@@ -1,0 +1,25 @@
+{
+  "version": "3.0",
+  "last_updated": "2026-11-09T08:00:00Z",
+  "ttl": 30,
+  "data": {
+    "system_id": "demo",
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "name": [
+      {
+        "text": "Demo bikeshare",
+        "language": "en"
+      },
+      {
+        "text": "演示共享单车",
+        "language": "zh"
+      }
+    ],
+    "opening_hours": "24/7",
+    "feed_contact_email": "feeds@example.org",
+    "timezone": "Asia/Shanghai"
+  }
+}

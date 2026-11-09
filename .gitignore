@@ -1,0 +1,5 @@
+/_build/
+/.mooncakes/
+/.moonagent/
+/docs/evidence/*/upstream/spec--*
+/docs/evidence/*/upstream/schema--*

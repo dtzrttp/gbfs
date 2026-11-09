@@ -1,0 +1,41 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "dtzrttp/gbfs"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn has_errors(Array[Diagnostic]) -> Bool
+
+pub fn supported_feeds() -> Array[String]
+
+pub fn validate_file(String, String) -> Array[Diagnostic]
+
+pub fn validate_snapshot(Map[String, String]) -> Array[Diagnostic]
+
+// Errors
+
+// Types and methods
+pub(all) struct Diagnostic {
+  file : String
+  pointer : String
+  severity : Severity
+  code : String
+  message : String
+  schema_pointer : String?
+} derive(@debug.Debug)
+pub fn Diagnostic::to_json(Self) -> Json
+pub fn Diagnostic::to_repr(Self) -> @debug.Repr
+
+pub(all) enum Severity {
+  Error
+  Warning
+} derive(Eq, @debug.Debug)
+pub fn Severity::equal(Self, Self) -> Bool
+pub fn Severity::not_equal(Self, Self) -> Bool
+pub fn Severity::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

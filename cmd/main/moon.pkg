@@ -1,0 +1,10 @@
+import {
+  "dtzrttp/gbfs",
+  "moonbitlang/core/env",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/x/fs",
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "js"

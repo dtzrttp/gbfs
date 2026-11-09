@@ -1,0 +1,24 @@
+{
+  "version": "3.0",
+  "last_updated": "2026-11-09T08:00:00Z",
+  "ttl": 30,
+  "data": {
+    "stations": [
+      {
+        "station_id": "s1",
+        "num_vehicles_available": 2,
+        "num_docks_available": 3,
+        "vehicle_types_available": [
+          {
+            "vehicle_type_id": "bike",
+            "count": 2
+          }
+        ],
+        "is_installed": true,
+        "is_renting": true,
+        "is_returning": true,
+        "last_reported": "2026-11-09T08:00:00Z"
+      }
+    ]
+  }
+}

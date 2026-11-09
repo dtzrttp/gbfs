@@ -1,0 +1,25 @@
+{
+  "version": "3.0",
+  "last_updated": "2026-11-09T08:00:00Z",
+  "ttl": 30,
+  "data": {
+    "stations": [
+      {
+        "station_id": "s1",
+        "name": [
+          {
+            "text": "Central",
+            "language": "en"
+          },
+          {
+            "text": "中心站",
+            "language": "zh"
+          }
+        ],
+        "lat": 31.2,
+        "lon": 121.4,
+        "capacity": 5
+      }
+    ]
+  }
+}
